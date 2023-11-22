@@ -1,0 +1,51 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title News
+        link(rel="stylesheet", href="../../css/style.css", attr)
+    body 
+        header(class="p-5 bg-cyan-600")
+            h1(class="font-bold text-6xl text-center text-white ") LOGO
+        div(class="grid p-5")
+            div(class="flex group border-gray-500 focus-within:border-cyan-600 border-2 rounded overflow-hidden")
+                input(type="text" placeholder="Search here..." class="w-[85%] px-3 py-2 outline-none rounded text-lg h-full")
+                div(class="h-full w-[15%] grid place-items-center group-focus-within:bg-black")
+                    svg(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke-width='1.5' class="w-6 h-6 stroke-gray-600 group-focus-within:stroke-white")
+                        path(stroke-linecap='round' stroke-linejoin='round' d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z')
+        
+    
+        menu(class="w-full bg-cyan-600 p-3 flex justify-between" id="navbar-scroll-target")
+            h2(class="text-3xl font-light") MENU
+            div(id="navbar-btn" class="border border-white grid place-items-center py-2 px-3")
+                svg.w-6.h-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke-width='1.5' stroke='currentColor')
+                    path(stroke-linecap='round' stroke-linejoin='round' d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5')
+
+        nav(class="fixed -left-2/3 top-0 w-[60vw] h-screen bg-black flex flex-col justify-evenly items-center text-white font-bold text-xl navbar-transition" id="navbar")
+            a(href="#") Home
+            a(href="#") About
+            a(href="#") Contact
+
+        block main
+
+        script.
+            const target = document.getElementById('navbar-scroll-target')
+            const navbar = document.getElementById("navbar")
+            const navbarBtn = document.getElementById("navbar-btn")
+            const main = document.getElementById("main")
+            window.onscroll = () => {
+                if(window.pageYOffset >= 180) {
+                    main.style.marginTop = "70px"
+                    target.classList.add("menu-scroll")
+                } else {
+                    main.style.marginTop = "0px"
+                    target.classList.remove("menu-scroll")
+                }
+            }
+
+            navbarBtn.addEventListener("click", (e) => {
+                navbar.classList.toggle('left-0')
+            })
+
+    

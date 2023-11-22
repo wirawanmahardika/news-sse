@@ -1,0 +1,4 @@
+node_modules
+additinal-files
+.env
+tailwind.config.js
