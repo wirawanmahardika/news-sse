@@ -2,13 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.menu-scroll {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
 .navbar-transition {
     transition: 0.5s;
+}
+
+.navbar-left-0 {
+    @apply left-0;
 }

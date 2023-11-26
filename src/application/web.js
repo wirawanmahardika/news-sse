@@ -1,6 +1,6 @@
 import express from "express";
 import helmet from 'helmet'
-import routeRegulator from "../routes/route-regulator.js";
+import routeRegulator from "../main-routes.js";
 
 const web = express();
 

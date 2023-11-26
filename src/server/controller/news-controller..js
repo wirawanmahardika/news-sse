@@ -1,6 +1,18 @@
 import { prisma } from "../../application/database.js";
-import { addNewNewsSchema } from "../../validation/news-validation.js";
-import validation from "../../validation/validate.js";
+import { addNewNewsSchema } from "../validation/news-validation.js";
+import validation from "../validation/validate.js";
+
+const getAllNewsCategory = async (req, res, next) => {
+  try {
+    const news = await prisma.news.findMany();
+    res.json({
+      message: "Berhasil mengambil semua category berita",
+      data: news,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const addCategoryNews = async (req, res, next) => {
   try {
@@ -36,4 +48,5 @@ const addNewNews = async (req, res, next) => {
 export default {
   addCategoryNews,
   addNewNews,
+  getAllNewsCategory,
 };
