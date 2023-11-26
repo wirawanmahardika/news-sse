@@ -1,5 +1,5 @@
 import express from "express";
-import clientSideController from "../../controller/client-side/public-client-side.js";
+import clientSideController from "../controller/public-client-side.js";
 
 const publicClientSideRoute = express.Router();
 

@@ -1,6 +1,6 @@
-import privateServerSideRoute from "./sub-routes-private/private-server-side.js";
-import publicServerSideRoute from "./sub-routes-public/public-server-side.js";
-import publicClientSideRoute from "./sub-routes-public/public-client-side.js";
+import publicClientSideRoute from "./client/routes/public-client-side.js";
+import privateServerSideRoute from "./server/routes/private-server-side.js";
+import publicServerSideRoute from "./server/routes/public-server-side.js";
 import express from "express";
 
 const routeRegulator = express.Router();

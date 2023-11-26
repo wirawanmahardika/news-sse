@@ -1,6 +1,6 @@
 import { prisma } from "../../application/database.js";
-import { addNewNewsSchema } from "../../validation/news-validation.js";
-import validation from "../../validation/validate.js";
+import { addNewNewsSchema } from "../validation/news-validation.js";
+import validation from "../validation/validate.js";
 
 const addCategoryNews = async (req, res, next) => {
   try {
