@@ -1,15 +1,17 @@
 extends ./includes/layouts
 
-mixin text 
-    h3(class="text-lg font-bold") Judul 1 Lorem ipsum dolor
-    p Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus praesentium quasi libero nobis explicabo laborum recusandae voluptates sed quod! Aut, nobis laboriosam distinctio non tenetur nisi adipisci natus fugiat numquam impedit itaque id ratione voluptate quos. Ratione, enim ab dignissimos itaque.
-
-    p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus dignissimos quis cupiditate temporibus fugit magnam, error officia corrupti soluta facilis quod repudiandae laudantium? Consequatur corporis consectetur fugit sed sint ipsa.
+mixin text(judul, content)
+    h3(class="text-lg font-bold") #{judul}
+    each paragraph in content
+        p(class="break-words")= paragraph
 
 block main
     main(class="w-full p-5 grid grid-cols-1 gap-y-3")
         div(class="w-full bg-black min-h-[200px]")
     
         article(class="text-justify flex flex-col gap-y-9")
-            +text
-            +text
+            each value in contents
+                +text(value.sub_title, value.content)
+
+
+    script(src="/js/read-news.js") 

@@ -1,0 +1,40 @@
+extends ./includes/layouts
+
+block main 
+    form(class="flex flex-col w-full items-center p-4")
+        h3(class="font-bold text-xl my-5") TAMBAH BERITA BARU
+
+        div(class="w-full p-3 gap-y-4")
+            label(class="font-bold text-lg") Judul
+            input(type="text" name="judul" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600" required)
+
+        div(class="w-full p-3 gap-y-4")
+            label(class="font-bold text-lg") Kategori
+            select(name="category" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600" required) 
+                each kategori in newsCategories
+                    option(value=kategori.id_news)= kategori.category
+
+        div(class="jumlah-sub-judul || w-full p-3 gap-y-4")
+            label(class="font-bold text-lg") Jumlah Sub-Judul
+            input(type="number" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600" required)
+
+        div(id="sub-judul-container" class="w-full p-3 gap-y-2 flex-col hidden" )
+            label(class="font-bold text-lg") Sub-Judul Ke-x
+            input(type="text" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600" required)
+
+        div(id="content-container" class="w-full p-3 gap-y-2 flex-col hidden" )
+            label(class="font-bold text-lg") Content Ke-x
+            span(class="text-cyan-600 text-sm") Note : Gunakan $S untuk menambah paragraf baru
+            textarea(class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600" required name="content-x", cols="30", rows="10") 
+
+        button(type='submit' class="px-4 py-1 bg-cyan-600 rounded font-semibold my-2") Submit
+        
+        div(class="w-full mt-3")
+            div(class="content-number || flex flex-wrap justify-center w-fit max-w-[75%] mx-auto text-lg rounded overflow-hidden")
+                //- a(class="bg-cyan-600 px-3 py-1") 1
+                //- a(class="bg-gray-700 px-3 py-1") 2
+
+
+    script(src="/js/add-news.js")
+        
+        
