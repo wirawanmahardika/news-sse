@@ -87,7 +87,7 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    const unpreparedResult = await fetch("/api/v1/private/content", {
+    const unpreparedResult = await fetch("/api/v1/content", {
       method: "POST",
       headers: {
         "content-type": "application/json",
