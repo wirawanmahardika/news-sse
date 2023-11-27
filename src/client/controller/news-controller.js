@@ -63,8 +63,10 @@ const addNews = async (req, res, next) => {
 };
 
 const addCategoryNews = async (req, res, next) => {
-  res.render("add-category-news", {});
+  res.render("add-category-news");
 };
+
+
 
 export default {
   homeView,
