@@ -5,6 +5,7 @@ const serverSideRoute = express.Router();
 
 serverSideRoute.post("/news", newController.addCategoryNews); //
 serverSideRoute.post("/content", newController.addNewNews); //
+serverSideRoute.post("/news/category", newController.addCategoryNews); //
 
 serverSideRoute.get("/news", newController.getAllNewsCategory);
 

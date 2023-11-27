@@ -1,5 +1,9 @@
+import dayjs from "dayjs";
 import { prisma } from "../../application/database.js";
-import { addNewNewsSchema } from "../validation/news-validation.js";
+import {
+  addNewCategoryNewsSchema,
+  addNewNewsSchema,
+} from "../validation/news-validation.js";
 import validation from "../validation/validate.js";
 
 const getAllNewsCategory = async (req, res, next) => {
@@ -16,10 +20,12 @@ const getAllNewsCategory = async (req, res, next) => {
 
 const addCategoryNews = async (req, res, next) => {
   try {
-    const reqBody = validate();
-    reqBody.created_at = dayjs();
+    const reqBody = validation(addNewCategoryNewsSchema, req.body);
     const result = await prisma.news.create({
-      data: reqBody,
+      data: {
+        ...reqBody,
+        created_at: dayjs(),
+      },
     });
 
     res.status(201).json({

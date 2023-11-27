@@ -12,5 +12,9 @@ export const addNewNewsSchema = Joi.object({
       })
     )
     .required(),
-  subJudul: Joi.string().max(200).min(1).required,
+}).required();
+
+export const addNewCategoryNewsSchema = Joi.object({
+  category: Joi.string().max(100).min(1).required(),
+  image: Joi.binary(),
 }).required();
