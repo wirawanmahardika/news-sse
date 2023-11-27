@@ -73,6 +73,8 @@ contentContainer.lastElementChild.addEventListener("input", (e) => {
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const dataToSend = {
+    title: e.target.judul.value,
+    id_category_news: e.target.category.value,
     contents: dataToFetch.map((c) => {
       const subJudul = c.subJudul;
       delete c.subJudulKe;
@@ -80,11 +82,11 @@ form.addEventListener("submit", async (e) => {
       return {
         ...c,
         sub_title: subJudul,
-        title: e.target.judul.value,
-        id_news: e.target.category.value,
       };
     }),
   };
+
+  console.log(dataToSend);
 
   try {
     const unpreparedResult = await fetch("/api/v1/content", {

@@ -10,8 +10,8 @@ block main
         div(class="w-full bg-black min-h-[200px]")
     
         article(class="text-justify flex flex-col gap-y-9")
-            each value in contents
-                +text(value.sub_title, value.content)
+            each content in contents
+                +text(content.sub_title, content.content)
 
 
     script(src="/js/read-news.js") 

@@ -7,23 +7,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model News {
-  id_news Int  @id @db.UnsignedInt @default(autoincrement())
+model Category_news {
+  id_category_news Int  @id @db.UnsignedInt @default(autoincrement())
   category String @db.VarChar(101)
   img Bytes? @db.MediumBlob
   created_at DateTime @db.Timestamp()
 
+  news News[]
+}
+
+model News {
+  id_news Int @id @db.UnsignedInt @default(autoincrement())
+  id_category_news Int @db.UnsignedInt
+  img Bytes? @db.MediumBlob
+  title String @db.VarChar(201)
+  created_at DateTime @db.Timestamp()
+
+  category_news Category_news @relation(fields: [id_category_news], references: [id_category_news])
   content Content[]
 }
 
 model Content {
   id_content Int @id @db.UnsignedInt @default(autoincrement())
   id_news Int @db.UnsignedInt
-  img Bytes? @db.MediumBlob
-  title String @db.VarChar(201)
   sub_title String @db.VarChar(201)
   content String @db.Text
-  created_at DateTime @db.Timestamp()
 
   news News @relation(fields: [id_news], references: [id_news])
 }

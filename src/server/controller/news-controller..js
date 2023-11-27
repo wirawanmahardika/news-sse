@@ -8,7 +8,7 @@ import validation from "../validation/validate.js";
 
 const getAllNewsCategory = async (req, res, next) => {
   try {
-    const news = await prisma.news.findMany();
+    const news = await prisma.category_news.findMany();
     res.json({
       message: "Berhasil mengambil semua category berita",
       data: news,
@@ -21,11 +21,9 @@ const getAllNewsCategory = async (req, res, next) => {
 const addCategoryNews = async (req, res, next) => {
   try {
     const reqBody = validation(addNewCategoryNewsSchema, req.body);
-    const result = await prisma.news.create({
-      data: {
-        ...reqBody,
-        created_at: dayjs(),
-      },
+    reqBody.created_at = dayjs();
+    const result = await prisma.category_news.create({
+      data: reqBody,
     });
 
     res.status(201).json({
@@ -39,12 +37,27 @@ const addCategoryNews = async (req, res, next) => {
 const addNewNews = async (req, res, next) => {
   try {
     const reqBody = validation(addNewNewsSchema, req.body);
-    const result = await prisma.content.createMany({
-      data: reqBody.contents,
+
+    const result = await prisma.news.create({
+      data: {
+        img: reqBody.image,
+        title: reqBody.title,
+        created_at: dayjs(),
+        category_news: {
+          connect: {
+            id_category_news: reqBody.id_category_news,
+          },
+        },
+        content: {
+          createMany: {
+            data: reqBody.contents,
+          },
+        },
+      },
     });
 
     res.status(201).json({
-      message: "Berhasil menambah category news " + result.category,
+      message: "Berhasil menambah berita " + result.title,
     });
   } catch (error) {
     next(error);
