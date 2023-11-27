@@ -1,9 +1,24 @@
+import dayjs from "dayjs";
 import { prisma } from "../../application/database.js";
 
 const homeView = async (req, res, next) => {
   try {
-    res.render("index");
-  } catch (error) {}
+    const categoryNews = await prisma.news.findMany();
+    const recentNews = await prisma.content.findMany({
+      where: {
+        created_at: {
+          gte: dayjs().subtract(7, "days"),
+        },
+      },
+      take: 5,
+    });
+    res.render("index", {
+      categoryNews,
+      recentNews,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const readNews = async (req, res, next) => {

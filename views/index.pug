@@ -1,14 +1,20 @@
 extends ./includes/layouts
 
+mixin kategori(header, image)
+    h3(class="font-semibold text-2xl") #{header}
+    //- img(class="w-full min-h-[200px] border-4 border-gray-800" src=image)
+    img(class="w-full min-h-[200px] border-4 border-gray-800" src="/img/news-350x223-3.jpg")
+
+
 block main
 
-    main(class="grid gap-y-3 w-full p-5" id="main") 
-        h3(class="font-semibold text-2xl") Berita Terkini
-        div(class="bg-black w-full min-h-[200px]")
-        div(class="bg-black w-full min-h-[200px]")
-        div(class="bg-black w-full min-h-[200px]")
+    main(class="grid gap-y-3 w-full p-5" id="main")
+        h2(class="font-bold text-3xl") Category
+        each n in categoryNews
+            +kategori(n.category)
 
-        h3(class="font-semibold text-2xl") Categories
-        div(class="bg-black w-full min-h-[200px]")
-        div(class="bg-black w-full min-h-[200px]")
-        div(class="bg-black w-full min-h-[200px]")
+        h2(class="font-bold text-3xl") Terkini
+        each n in recentNews
+            h3(class="font-semibold text-2xl") #{n.title}
+            img(class="w-full min-h-[200px] border-4 border-gray-800" src="/img/news-350x223-1.jpg")
+            //- img(class="w-full min-h-[200px] border-4 border-gray-800" src=image)
