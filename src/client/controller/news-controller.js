@@ -28,7 +28,7 @@ const homeView = async (req, res, next) => {
 const readNews = async (req, res, next) => {
   try {
     if (!req.query.news) {
-      return res.redirect("/view/home");
+      return res.redirect("/home");
     }
 
     const news = await prisma.news.findUnique({

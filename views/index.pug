@@ -16,5 +16,5 @@ block main
         h2(class="font-bold text-3xl mt-7") Terkini
         each n in recentNews
             h3(class="font-semibold text-xl") #{n.title}
-            a(href="/view/read-news?news="+n.id_news)
+            a(href="/read-news?news="+n.id_news)
                 img(class="w-full min-h-[200px] border-4 border-gray-800" src="/img/news-350x223-1.jpg")

@@ -5,7 +5,6 @@ import passport from "passport";
 import flash from "express-flash";
 import session from "express-session";
 import { initializePassport } from "../security/passport.js";
-import { errorHandlerMid } from "../middleware/errorHandlerMiddleware.js";
 
 const web = express();
 
@@ -21,6 +20,5 @@ web.use(passport.session());
 initializePassport(passport);
 
 web.use(routeRegulator);
-web.use(errorHandlerMid);
 
 export default web

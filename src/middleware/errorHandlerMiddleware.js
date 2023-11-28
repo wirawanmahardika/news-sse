@@ -1,6 +1,6 @@
 const errorHandlerMid = (err, req, res, next) => {
   if (err) {
-    res.redirect("/view/error?message=" + err.message);
+    res.redirect("/error?message=" + err.message);
     return;
   }
   next();
@@ -8,7 +8,7 @@ const errorHandlerMid = (err, req, res, next) => {
 
 const errorToHomeMid = (err, req, res, next) => {
   if (err) {
-    return res.redirect("/view/home");
+    return res.redirect("/home");
   }
   next();
 };
