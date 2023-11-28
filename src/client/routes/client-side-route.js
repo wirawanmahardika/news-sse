@@ -10,5 +10,6 @@ clientSideRoute.get("/read-news", newsController.readNews);
 clientSideRoute.get("/add-category-news", newsController.addCategoryNews);
 
 clientSideRoute.get("/login", userController.login);
+clientSideRoute.get("/signup", userController.signup);
 
 export default clientSideRoute;

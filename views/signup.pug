@@ -8,10 +8,18 @@ html(lang="en")
     body 
         form(action="/api/v1/login" method="post" class="flex w-screen h-screen items-center justify-center p-9")
             div(class="flex flex-col gap-y-3 w-full")
-                h1(class="font-bold text-3xl text-center") Login
+                h1(class="font-bold text-3xl text-center") Signup
 
-                if messages.error 
-                    p(class="text-center text-red-600 font-semibold mt-3")= messages.error
+                //- if messages.error 
+                //-     p(class="text-center text-red-600 font-semibold mt-3")= messages.error
+
+                div(class="flex flex-col gap-y-1")
+                    label(for="email" class="font-semibold text-lg") Email
+                    input(type="email" id="email" name="email" class="w-full outline-none border-2 border-gray-800  py-1 px-3 rounded focus-within:border-cyan-600" placeholder="Masukkan email..." required)
+
+                div(class="flex flex-col gap-y-1")
+                    label(for="fullname" class="font-semibold text-lg") Fullname
+                    input(type="text" id="fullname" name="fullname" class="w-full outline-none border-2 border-gray-800  py-1 px-3 rounded focus-within:border-cyan-600" placeholder="Masukkan fullname..." required)
 
                 div(class="flex flex-col gap-y-1")
                     label(for="username" class="font-semibold text-lg") Username
