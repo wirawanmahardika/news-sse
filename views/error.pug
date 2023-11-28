@@ -1,0 +1,11 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Error
+        link(rel="stylesheet", href="/css/style.css")
+    body 
+        div(class="w-screen h-screen flex justify-center items-center flex-col gap-y-5")
+            h2(class="font-bold text-3xl text-red-600")= error
+            a(class="px-3 py-1 rounded bg-cyan-600 font-semibold" href="/view/home") Back to Home Page

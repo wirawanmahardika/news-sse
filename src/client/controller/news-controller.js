@@ -27,9 +27,13 @@ const homeView = async (req, res, next) => {
 
 const readNews = async (req, res, next) => {
   try {
+    if (!req.query.news) {
+      return res.redirect("/view/home");
+    }
+
     const news = await prisma.news.findUnique({
       where: {
-        id_news: req.query.news ? parseInt(req.query.news) : undefined,
+        id_news: parseInt(req.query.news),
       },
       include: {
         content: true,
@@ -50,20 +54,28 @@ const readNews = async (req, res, next) => {
 };
 
 const addNews = async (req, res, next) => {
-  const news = await prisma.category_news.findMany({
-    select: {
-      category: true,
-      id_category_news: true,
-    },
-  });
+  try {
+    const news = await prisma.category_news.findMany({
+      select: {
+        category: true,
+        id_category_news: true,
+      },
+    });
 
-  res.render("add-news", {
-    newsCategories: news,
-  });
+    res.render("add-news", {
+      newsCategories: news,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const addCategoryNews = async (req, res, next) => {
-  res.render("add-category-news");
+  try {
+    res.render("add-category-news");
+  } catch (error) {
+    next(error);
+  }
 };
 
 
