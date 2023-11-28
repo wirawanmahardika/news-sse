@@ -3,18 +3,20 @@ extends ./includes/layouts
 mixin kategori(header, image)
     h3(class="font-semibold text-xl") #{header}
     //- img(class="w-full min-h-[200px] border-4 border-gray-800" src=image)
-    img(class="w-full min-h-[200px] border-4 border-gray-800" src="/img/news-350x223-3.jpg")
+    img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src="/img/news-350x223-3.jpg")
 
 
 block main
 
-    main(class="grid gap-y-3 w-full p-5" id="main")
-        h2(class="font-bold text-3xl mt-7") Category
-        each n in categoryNews
-            +kategori(n.category)
+    main(class="grid gap-y-3 w-full p-5 sm:grid-cols-2 sm:gap-3" id="main")
+        div
+            h2(class="font-bold text-3xl mt-7 sm:mb-3") Category
+            each n in categoryNews
+                +kategori(n.category)
 
-        h2(class="font-bold text-3xl mt-7") Terkini
-        each n in recentNews
-            h3(class="font-semibold text-xl") #{n.title}
-            a(href="/read-news?news="+n.id_news)
-                img(class="w-full min-h-[200px] border-4 border-gray-800" src="/img/news-350x223-1.jpg")
+        div 
+            h2(class="font-bold text-3xl mt-7 sm:mb-3") Terkini
+            each n in recentNews
+                h3(class="font-semibold text-xl") #{n.title}
+                a(href="/read-news?news="+n.id_news)
+                    img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src="/img/news-350x223-1.jpg")
