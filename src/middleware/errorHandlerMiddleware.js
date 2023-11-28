@@ -8,7 +8,7 @@ const errorHandlerMid = (err, req, res, next) => {
 
 const errorToHomeMid = (err, req, res, next) => {
   if (err) {
-    return res.redirect("/home");
+    return res.redirect("/");
   }
   next();
 };
