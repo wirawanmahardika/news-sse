@@ -27,6 +27,21 @@ const readNews = async (req, res, next) => {
   }
 };
 
+const categoryNews = async (req, res, next) => {
+  try {
+    const newsCategories = await prisma.category_news.findMany({
+      include: {
+        news: true,
+      },
+    });
+
+    console.log(newsCategories);
+    res.render("kategori-news", { newsCategories });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addNews = async (req, res, next) => {
   try {
     const news = await prisma.category_news.findMany({
@@ -56,4 +71,5 @@ export default {
   readNews,
   addNews,
   addCategoryNews,
+  categoryNews,
 };

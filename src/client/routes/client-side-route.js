@@ -9,6 +9,7 @@ const clientSideRoute = express.Router();
 
 clientSideRoute.get("/", othersController.homeView);
 clientSideRoute.get("/read-news", newsController.readNews);
+clientSideRoute.get("/category-news", newsController.categoryNews);
 
 clientSideRoute.get("/add-news", isAuthenticated, newsController.addNews);
 clientSideRoute.get("/add-category-news",isAuthenticated,newsController.addCategoryNews);
