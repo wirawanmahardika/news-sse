@@ -1,9 +1,9 @@
 extends ./includes/layouts
 
 mixin text(judul, content)
-    h3(class="text-lg font-bold break-words") #{judul}
+    h3(class="text-lg font-bold break-words sm:text-xl") #{judul}
     each paragraph in content
-        p(class="break-words")= paragraph
+        p(class="break-words sm:text-lg")= paragraph
 
 block main
     main(class="w-full p-5 grid grid-cols-1 gap-y-3")
