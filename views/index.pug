@@ -1,22 +1,24 @@
 extends ./includes/layouts
 
 mixin kategori(header, image)
-    h3(class="font-semibold text-xl sm:text-center sm:text-2xl") #{header}
-    //- img(class="w-full min-h-[200px] border-4 border-gray-800" src=image)
-    img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src="/img/news-350x223-3.jpg")
+    div(class="sm:flex sm:flex-col sm:gap-y-2")
+        h3(class="font-semibold text-xl sm:text-center sm:text-2xl") #{header}  
+        img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src="/img/news-350x223-3.jpg")
+        //- img(class="w-full min-h-[200px] border-4 border-gray-800" src=image)
 
-
+mixin recent(n)
+    div(class="sm:flex sm:flex-col sm:gap-y-2")
+        h3(class="font-semibold text-xl sm:text-center sm:text-2xl") #{n.title}
+        a(href="/read-news?news="+n.id_news)
+            img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src="/img/news-350x223-1.jpg")
 block main
-
-    main(class="grid gap-y-3 w-full p-5 sm:grid-cols-2 sm:gap-3" id="main")
-        div(class="flex flex-col gap-y-4")
-            h2(class="font-bold text-3xl mt-7 sm:mb-3") Category
+    main(class="grid gap-y-3 w-full p-5 sm:gap-3" id="main")
+        div(class="flex flex-col gap-y-4 sm:grid sm:col-span-2 sm:grid-cols-2 sm:gap-6")
+            h2(class="font-bold text-3xl mt-7 sm:mb-3 sm:col-span-2") Category
             each n in categoryNews
                 +kategori(n.category)
 
-        div(class="flex flex-col gap-y-4") 
-            h2(class="font-bold text-3xl mt-7 sm:mb-3") Terkini
+        div(class="flex flex-col gap-y-4 sm:grid sm:col-span-2 sm:grid-cols-2 sm:gap-6") 
+            h2(class="font-bold text-3xl mt-7 sm:mb-3 sm:col-span-2") Terkini
             each n in recentNews
-                h3(class="font-semibold text-xl sm:text-center sm:text-2xl") #{n.title}
-                a(href="/read-news?news="+n.id_news)
-                    img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src="/img/news-350x223-1.jpg")
+                +recent(n)
