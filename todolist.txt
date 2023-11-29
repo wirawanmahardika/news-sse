@@ -1,1 +1,2 @@
-1. 
+1. responsive design di lg dan xl
+2. page admin

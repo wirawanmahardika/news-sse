@@ -1,19 +1,19 @@
 extends ./includes/layouts
 
 block main 
-    form(class="flex flex-col w-full items-center p-4 mx-auto md:w-3/4")
-        h3(class="font-bold text-xl my-5 md:text-3xl") TAMBAH BERITA BARU
+    form(class="flex flex-col w-full items-center p-4 mx-auto md:w-3/4 lg:w-3/5 lg:mt-8")
+        h3(class="font-bold text-xl my-5 md:text-3xl lg:text-2xl") TAMBAH BERITA BARU
 
         div(class="w-full p-3 gap-y-2 md:flex md:flex-col")
-            label(class="font-bold text-lg md:text-2xl") Category
-            input(type="text" name="category" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600 md:px-3 md:py-2" required)
+            label(class="font-bold text-lg md:text-2xl lg:text-xl") Category
+            input(type="text" name="category" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600 md:px-3 md:py-2 lg:py-1" required)
 
         div(class="w-full p-3 gap-y-2 md:flex md:flex-col")
-            label(class="font-bold text-lg md:text-2xl") Image
-            input(type="file" name="image" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600 md:px-3 md:py-2")
+            label(class="font-bold text-lg md:text-2xl lg:text-xl") Image
+            input(type="file" name="image" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600 md:px-3 md:py-2 lg:py-1")
 
 
-        button(type='submit' class="px-4 py-1 bg-cyan-600 rounded font-semibold my-2 md:py-2 md:px-5 md:text-2xl") Submit
+        button(type='submit' class="px-4 py-1 bg-cyan-600 rounded font-semibold my-2 md:py-2 md:px-5 md:text-2xl lg:text-lg lg:py-1") Submit
 
     script(src="/js/add-category-news.js")
         

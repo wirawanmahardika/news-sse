@@ -12,7 +12,7 @@ mixin recent(n)
         a(href="/read-news?news="+n.id_news)
             img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src="/img/news-350x223-1.jpg")
 block main
-    main(class="grid gap-y-3 w-full p-5 sm:gap-3" id="main")
+    main(class="grid gap-y-3 w-full p-5  mx-auto sm:gap-3 lg:w-3/4" id="main")
         div(class="flex flex-col gap-y-4 sm:grid sm:col-span-2 sm:grid-cols-2 sm:gap-6")
             h2(class="font-bold text-3xl mt-7 sm:mb-3 sm:col-span-2 md:text-4xl") Category
             each n in categoryNews
