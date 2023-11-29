@@ -2,12 +2,12 @@ extends ./includes/layouts
 
 block main 
     div(class="flex flex-col w-full p-4 gap-y-4")
-        h1(class="font-bold text-2xl text-center") KATEGORI BERITA
+        h1(class="font-bold text-2xl text-center md:text-3xl") KATEGORI BERITA
 
-        ul(class="list-none p-4 sm:grid sm:grid-cols-2 sm:justify-items-center")
+        ul(class="list-none p-4 sm:grid sm:grid-cols-2 sm:justify-items-center sm:gap-7 md:grid-cols-3")
             each kategori in newsCategories
-                li(class="font-bold text-lg")= kategori.category
+                li(class="font-bold text-lg text-center md:text-2xl")= kategori.category
                     ul(class="list-disc px-5 py-2") 
                         each news in kategori.news
-                            li(class="font-normal text-base text-blue-600 break-words")
+                            li(class="font-normal text-base text-blue-600 break-words text-left md:text-lg")
                                 a(class="break-words" href="/read-news?news="+news.id_news)= news.title
