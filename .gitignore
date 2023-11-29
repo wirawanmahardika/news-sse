@@ -2,3 +2,4 @@ node_modules
 additional-files
 .env
 tailwind.config.js
+todolist.txt

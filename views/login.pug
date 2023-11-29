@@ -7,7 +7,7 @@ html(lang="en")
         link(rel="stylesheet" href="/css/style.css")
     body(class="font-poppins")
         form(action="/api/v1/login" method="post" class="flex w-screen h-screen items-center justify-center p-9")
-            div(class="flex flex-col gap-y-3 w-full")
+            div(class="flex flex-col gap-y-3 w-full sm:w-2/3")
                 h1(class="font-bold text-3xl text-center") Login
 
                 if messages.error 
@@ -15,11 +15,11 @@ html(lang="en")
 
                 div(class="flex flex-col gap-y-1")
                     label(for="username" class="font-semibold text-lg") Username
-                    input(type="text" id="username" name="username" class="w-full outline-none border-2 border-gray-800  py-1 px-3 rounded focus-within:border-cyan-600" placeholder="Masukkan username...")
+                    input(type="text" id="username" name="username" class="w-full outline-none border-2 border-gray-800  py-1 px-3 rounded focus-within:border-cyan-600" placeholder="Masukkan username..." required)
 
                 div(class="flex flex-col gap-y-1")
                     label(for="password" class="font-semibold text-lg") Password
-                    input(type="password" id="password"  name="password" class="w-full outline-none border-2 border-gray-800  py-1 px-3 rounded focus-within:border-cyan-600" placeholder="Masukkan password...")
+                    input(type="password" id="password"  name="password" class="w-full outline-none border-2 border-gray-800  py-1 px-3 rounded focus-within:border-cyan-600" placeholder="Masukkan password..." required)
 
                 button(type='submit' class="px-3 py-1 rounded bg-cyan-600 mt-3") Submit
 
