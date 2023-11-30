@@ -17,8 +17,12 @@ const homeView = async (req, res, next) => {
     });
 
     res.render("index", {
-      categoryNews,
       recentNews,
+      categoryNews: categoryNews.map((cn) => {
+        cn.img =
+          "data:image/jpeg;base64, " + Buffer.from(cn.img).toString("base64");
+        return cn;
+      }),
     });
   } catch (error) {
     next(error);

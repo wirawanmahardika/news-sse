@@ -20,7 +20,10 @@ const getAllNewsCategory = async (req, res, next) => {
 
 const addCategoryNews = async (req, res, next) => {
   try {
-    const reqBody = validation(addNewCategoryNewsSchema, req.body);
+    const reqBody = validation(addNewCategoryNewsSchema, {
+      category: req.body.category,
+      img: req.file.buffer,
+    });
     reqBody.created_at = dayjs();
     const result = await prisma.category_news.create({
       data: reqBody,
@@ -36,6 +39,9 @@ const addCategoryNews = async (req, res, next) => {
 
 const addNewNews = async (req, res, next) => {
   try {
+    console.log(req.body);
+    console.log(req.file);
+    req.body.img = req.file.buffer;
     const reqBody = validation(addNewNewsSchema, req.body);
 
     const result = await prisma.news.create({

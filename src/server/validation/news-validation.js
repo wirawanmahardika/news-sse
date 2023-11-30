@@ -2,7 +2,7 @@ import Joi from "joi";
 
 export const addNewNewsSchema = Joi.object({
   title: Joi.string().max(200).min(1).required(),
-  image: Joi.binary(),
+  img: Joi.binary().required(),
   id_category_news: Joi.number().required(),
   contents: Joi.array()
     .items(
@@ -16,5 +16,5 @@ export const addNewNewsSchema = Joi.object({
 
 export const addNewCategoryNewsSchema = Joi.object({
   category: Joi.string().max(100).min(1).required(),
-  image: Joi.binary(),
+  img: Joi.binary().required(),
 }).required();
