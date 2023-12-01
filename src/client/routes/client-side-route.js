@@ -11,15 +11,17 @@ clientSideRoute.get("/", othersController.homeView);
 clientSideRoute.get("/read-news", newsController.readNews);
 clientSideRoute.get("/category-news", newsController.categoryNews);
 
-clientSideRoute.get("/add-news", isAuthenticated, newsController.addNews);
-clientSideRoute.get("/add-category-news",isAuthenticated,newsController.addCategoryNews);
 clientSideRoute.get("/login", ensureAuthenticated, userController.login);
 clientSideRoute.get("/signup", userController.signup);
+clientSideRoute.get("/admin", isAuthenticated, userController.admin);
+clientSideRoute.get("/admin/add-news", isAuthenticated, newsController.addNews);
+clientSideRoute.get("/admin/add-category-news",isAuthenticated,newsController.addCategoryNews);
 
 clientSideRoute.get("/error", othersController.errorView);
 
 clientSideRoute.use(errorHandlerMid);
 
+//prettier-ignore
 //prettier-ignore
 //prettier-ignore
 //prettier-ignore

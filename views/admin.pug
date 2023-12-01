@@ -1,0 +1,10 @@
+extends ./includes/layouts
+
+block main
+    main(class="w-3/5 mx-auto flex flex-col items-center p-6")
+        h2(class="font-bold text-2xl") Admin Navigation Control
+        ul(class="flex flex-col items-center mt-9 gap-y-3")
+            li(class="hover:text-cyan-600") 
+                a(href="/admin/add-category-news") Add Category News
+            li(class="hover:text-cyan-600") 
+                a(href="/admin/add-news") Add News
