@@ -23,6 +23,7 @@ const readNews = async (req, res, next) => {
       img:
         "data:image/jpeg;base64, " + Buffer.from(news.img).toString("base64"),
       contents: news.content,
+      authenticated: req.isAuthenticated(),
     });
   } catch (error) {
     next(error);
@@ -38,7 +39,10 @@ const categoryNews = async (req, res, next) => {
     });
 
     console.log(newsCategories);
-    res.render("kategori-news", { newsCategories });
+    res.render("kategori-news", {
+      newsCategories,
+      authenticated: req.isAuthenticated(),
+    });
   } catch (error) {
     next(error);
   }
@@ -55,6 +59,7 @@ const addNews = async (req, res, next) => {
 
     res.render("add-news", {
       newsCategories: news,
+      authenticated: req.isAuthenticated(),
     });
   } catch (error) {
     next(error);
@@ -63,7 +68,7 @@ const addNews = async (req, res, next) => {
 
 const addCategoryNews = async (req, res, next) => {
   try {
-    res.render("add-category-news");
+    res.render("add-category-news", { authenticated: req.isAuthenticated() });
   } catch (error) {
     next(error);
   }

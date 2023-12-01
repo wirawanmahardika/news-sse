@@ -3,7 +3,17 @@ import { prisma } from "../../application/database.js";
 
 const homeView = async (req, res, next) => {
   try {
-    const categoryNews = await prisma.category_news.findMany();
+    const categoryNews = await prisma.category_news.findMany({
+      take: 5,
+      where: {
+        created_at: {
+          gte: dayjs().subtract(7, "days"),
+        },
+      },
+      orderBy: {
+        created_at: "desc",
+      },
+    });
     const recentNews = await prisma.news.findMany({
       take: 5,
       where: {
@@ -27,6 +37,7 @@ const homeView = async (req, res, next) => {
           "data:image/jpeg;base64, " + Buffer.from(cn.img).toString("base64");
         return cn;
       }),
+      authenticated: req.isAuthenticated(),
     });
   } catch (error) {
     next(error);
