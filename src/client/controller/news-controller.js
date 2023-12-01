@@ -74,9 +74,15 @@ const addCategoryNews = async (req, res, next) => {
   }
 };
 
+const newsManagement = async (req, res, next) => {
+  res.render("news-management", {
+    authenticated: req.isAuthenticated(),
+  });
+};
 export default {
   readNews,
   addNews,
   addCategoryNews,
   categoryNews,
+  newsManagement,
 };

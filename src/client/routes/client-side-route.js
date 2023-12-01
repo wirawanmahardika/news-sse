@@ -16,11 +16,13 @@ clientSideRoute.get("/signup", userController.signup);
 clientSideRoute.get("/admin", isAuthenticated, userController.admin);
 clientSideRoute.get("/admin/add-news", isAuthenticated, newsController.addNews);
 clientSideRoute.get("/admin/add-category-news",isAuthenticated,newsController.addCategoryNews);
+clientSideRoute.get("/admin/news-management", isAuthenticated ,newsController.newsManagement);
 
 clientSideRoute.get("/error", othersController.errorView);
 
 clientSideRoute.use(errorHandlerMid);
 
+//prettier-ignore
 //prettier-ignore
 //prettier-ignore
 //prettier-ignore

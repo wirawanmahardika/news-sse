@@ -11,7 +11,7 @@ import mysqlSessionStore from "../config/session-store.js";
 dotenv.config();
 const web = express();
 
-// web.use(helmet());
+web.use(helmet());
 web.set("view engine", "pug");
 web.use(express.json());
 web.use(express.urlencoded({ extended: false }));
