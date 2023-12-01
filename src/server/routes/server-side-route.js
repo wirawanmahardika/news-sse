@@ -8,7 +8,7 @@ const serverSideRoute = express.Router();
 
 serverSideRoute.post("/news", multer().single('img'), newController.addCategoryNews); //
 serverSideRoute.post("/content", multer().single('img'), newController.addNewNews); //
-serverSideRoute.post("/news/category", newController.addCategoryNews); //
+serverSideRoute.patch("/news/category", multer().single('img'), newController.updateCategoryNews); //
 
 serverSideRoute.get("/news", newController.getAllNewsCategory);
 serverSideRoute.post("/login", userController.login);

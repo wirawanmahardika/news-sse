@@ -18,3 +18,9 @@ export const addNewCategoryNewsSchema = Joi.object({
   category: Joi.string().max(100).min(1).required(),
   img: Joi.binary().required(),
 }).required();
+
+export const updateCategoryNewsSchema = Joi.object({
+  id_category_news: Joi.number().min(0).required(),
+  category: Joi.string().max(100).min(1),
+  img: Joi.binary(),
+}).required();
