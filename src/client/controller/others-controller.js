@@ -17,7 +17,11 @@ const homeView = async (req, res, next) => {
     });
 
     res.render("index", {
-      recentNews,
+      recentNews: recentNews.map((cn) => {
+        cn.img =
+          "data:image/jpeg;base64, " + Buffer.from(cn.img).toString("base64");
+        return cn;
+      }),
       categoryNews: categoryNews.map((cn) => {
         cn.img =
           "data:image/jpeg;base64, " + Buffer.from(cn.img).toString("base64");

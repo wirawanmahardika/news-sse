@@ -4,9 +4,6 @@ const subJudulContainer = document.getElementById("sub-judul-container");
 const contentContainer = document.getElementById("content-container");
 const form = document.getElementsByTagName("form")[0];
 
-let dataToFetch = [];
-let selectedContent;
-
 jumlahSubJudulContainer.addEventListener("input", (e) => {
   let jmlSubjudul = e.target.value;
   contentNumber.innerHTML = "";
@@ -109,5 +106,23 @@ jumlahSubJudulContainer.addEventListener("input", (e) => {
     //   subJudulContainer.firstChild.textContent = "Subjudul Ke-" + 1;
     //   selectedContent = 1;
     // }
+  }
+});
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+
+  try {
+    const response = await fetch("http://localhost:5173/api/v1/content", {
+      method: "POST",
+      body: formData,
+      credentials: "same-origin",
+    });
+
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.log(error);
   }
 });

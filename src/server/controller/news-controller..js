@@ -5,6 +5,7 @@ import {
   addNewNewsSchema,
 } from "../validation/news-validation.js";
 import validation from "../validation/validate.js";
+import { addNewNewsValidation } from "../../utils/validation-manual.js";
 
 const getAllNewsCategory = async (req, res, next) => {
   try {
@@ -39,14 +40,19 @@ const addCategoryNews = async (req, res, next) => {
 
 const addNewNews = async (req, res, next) => {
   try {
-    console.log(req.body);
-    console.log(req.file);
-    req.body.img = req.file.buffer;
-    const reqBody = validation(addNewNewsSchema, req.body);
+    const dataFromClient = {
+      title: req.body.judul,
+      id_category_news: req.body.category,
+      img: req.file.buffer,
+      contents: addNewNewsValidation(req.body),
+    };
+
+    console.log(dataFromClient);
+    const reqBody = validation(addNewNewsSchema, dataFromClient);
 
     const result = await prisma.news.create({
       data: {
-        img: reqBody.image,
+        img: reqBody.img,
         title: reqBody.title,
         created_at: dayjs(),
         category_news: {

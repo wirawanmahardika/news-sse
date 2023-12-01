@@ -20,6 +20,8 @@ const readNews = async (req, res, next) => {
       return c;
     });
     res.render("read-news", {
+      img:
+        "data:image/jpeg;base64, " + Buffer.from(news.img).toString("base64"),
       contents: news.content,
     });
   } catch (error) {
