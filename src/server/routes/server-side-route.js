@@ -12,8 +12,10 @@ serverSideRoute.patch("/content", multer().single('img'), newController.updateNe
 serverSideRoute.patch("/news/category", multer().single('img'), newController.updateCategoryNews); //
 
 serverSideRoute.get("/news", newController.getAllNewsCategory);
+serverSideRoute.get("/category-news/:id_category_news", newController.getNewsById);
 serverSideRoute.post("/login", userController.login);
 
 serverSideRoute.use(serverSideErrorHandler);
 
+// prettier-ignore
 export default serverSideRoute;

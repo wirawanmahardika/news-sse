@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { prisma } from "../../application/database.js";
 
 const readNews = async (req, res, next) => {
@@ -79,10 +80,23 @@ const newsManagement = async (req, res, next) => {
     authenticated: req.isAuthenticated(),
   });
 };
+
+const categoryNewsManagement = async (req, res, next) => {
+  const categoryNews = await prisma.category_news.findMany({});
+  res.render("category-news-management", {
+    authenticated: req.isAuthenticated(),
+    categoryNews: categoryNews.map((cn) => {
+      cn.created_at = dayjs(cn.created_at).format("HH:mm, DD/MM/YYYY");
+      return cn;
+    }),
+  });
+};
+
 export default {
   readNews,
   addNews,
   addCategoryNews,
   categoryNews,
   newsManagement,
+  categoryNewsManagement,
 };
