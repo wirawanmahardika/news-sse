@@ -4,6 +4,7 @@ import {
   addNewCategoryNewsSchema,
   addNewNewsSchema,
   updateCategoryNewsSchema,
+  updateNewsSchema,
 } from "../validation/news-validation.js";
 import validation from "../validation/validate.js";
 import { addNewNewsValidation } from "../../utils/validation-manual.js";
@@ -47,7 +48,7 @@ const updateCategoryNews = async (req, res, next) => {
       id_category_news: req.body.id_category_news,
     });
 
-    const data = await prisma.category_news.update({
+    await prisma.category_news.update({
       where: {
         id_category_news: result.id_category_news,
       },
@@ -103,9 +104,38 @@ const addNewNews = async (req, res, next) => {
   }
 };
 
+const updateNews = async (req, res, next) => {
+  try {
+    const result = validation(updateNewsSchema, {
+      id_news: req.body.id_news,
+      id_category_news: req.body.id_category_news,
+      title: req.body.title,
+      img: req.file?.buffer,
+    });
+
+    await prisma.news.update({
+      where: {
+        id_news: result.id_news,
+      },
+      data: {
+        id_category_news: result.id_category_news,
+        img: result.img,
+        title: result.title,
+      },
+    });
+
+    return res.json({
+      message: "Berhasil update news",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   addCategoryNews,
   updateCategoryNews,
   addNewNews,
+  updateNews,
   getAllNewsCategory,
 };

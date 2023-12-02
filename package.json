@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon .",
     "tailwind": "tailwindcss -i ./public/css/input.css -o ./public/css/style.css --watch"
   },

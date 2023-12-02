@@ -14,6 +14,15 @@ export const addNewNewsSchema = Joi.object({
     .required(),
 }).required();
 
+export const updateNewsSchema = Joi.object({
+  id_news: Joi.number().min(0).required(),
+  id_category_news: Joi.number(),
+  title: Joi.string(),
+  img: Joi.binary(),
+  // id_contents: Joi.array(Joi.number()).required(),
+}).required();
+
+
 export const addNewCategoryNewsSchema = Joi.object({
   category: Joi.string().max(100).min(1).required(),
   img: Joi.binary().required(),
@@ -24,3 +33,4 @@ export const updateCategoryNewsSchema = Joi.object({
   category: Joi.string().max(100).min(1),
   img: Joi.binary(),
 }).required();
+
