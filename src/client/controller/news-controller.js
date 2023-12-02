@@ -112,6 +112,29 @@ const categoryNewsManagement = async (req, res, next) => {
   });
 };
 
+const newsContentManagement = async (req, res, next) => {
+  const news = await prisma.news.findUnique({
+    where: {
+      id_news: parseInt(req.params.id_news),
+    },
+    select: {
+      title: true,
+      img: true,
+      content: true,
+    },
+  });
+
+  res.render("news-content-management", {
+    authenticated: req.isAuthenticated(),
+    newsTitle: news.title,
+    img: "data:image/jpeg;base64, " + Buffer.from(news.img).toString("base64"),
+    contents: news.content.map((c) => {
+      c.content = c.content.split("$S");
+      return c;
+    }),
+  });
+};
+
 export default {
   readNews,
   addNews,
@@ -119,4 +142,5 @@ export default {
   categoryNews,
   newsManagement,
   categoryNewsManagement,
+  newsContentManagement,
 };

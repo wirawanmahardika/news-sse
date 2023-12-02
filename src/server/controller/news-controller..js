@@ -4,6 +4,7 @@ import {
   addNewCategoryNewsSchema,
   addNewNewsSchema,
   updateCategoryNewsSchema,
+  updateNewsContentSchema,
   updateNewsSchema,
 } from "../validation/news-validation.js";
 import validation from "../validation/validate.js";
@@ -132,6 +133,24 @@ const updateNews = async (req, res, next) => {
   }
 };
 
+const updateNewsContent = async (req, res, next) => {
+  try {
+    const result = validation(updateNewsContentSchema, req.body);
+    const updateResult = await prisma.content.update({
+      where: {
+        id_content: result.id_content,
+      },
+      data: {
+        content: result.content,
+        sub_title: result.sub_title,
+      },
+    });
+    res.redirect("/admin/news-content-management/" + updateResult.id_news);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getCategoryNewsByID = async (req, res, next) => {
   try {
     const news = await prisma.category_news.findUnique({
@@ -172,4 +191,5 @@ export default {
   getAllNewsCategory,
   getCategoryNewsByID,
   getNewsByID,
+  updateNewsContent,
 };

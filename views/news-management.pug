@@ -47,6 +47,7 @@ block main
                         td(class="border-black border-2 p-2 text-center")= n.created_at
                         td(class="border-black border-2 p-2 text-center") 
                             button(type="button" data-id_category_news=n.id_category_news, data-title=n.title, data-id_news=n.id_news, class="news || px-2 py-1 rounded mx-1 bg-emerald-500 font-semibold") Update
+                            a(href="/admin/news-content-management/"+n.id_news , type="button" class="px-2 py-1 rounded mx-1 bg-orange-500 font-semibold") Contents
                             button(type="button" data-id_news=n.id_news, class="image || px-2 py-1 rounded mx-1 bg-red-500 font-semibold") Image
 
     +image()
