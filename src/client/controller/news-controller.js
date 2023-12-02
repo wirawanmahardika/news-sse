@@ -76,9 +76,29 @@ const addCategoryNews = async (req, res, next) => {
 };
 
 const newsManagement = async (req, res, next) => {
-  res.render("news-management", {
-    authenticated: req.isAuthenticated(),
-  });
+  try {
+    const news = await prisma.news.findMany();
+    const categories = await prisma.category_news.findMany({
+      select: {
+        category: true,
+        id_category_news: true,
+      },
+    });
+
+    console.log(categories);
+    console.log(news);
+
+    res.render("news-management", {
+      categories,
+      news: news.map((n) => {
+        n.created_at = dayjs(n.created_at).format("HH:mm, DD-MM-YYYY");
+        return n;
+      }),
+      authenticated: req.isAuthenticated(),
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const categoryNewsManagement = async (req, res, next) => {

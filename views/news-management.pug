@@ -1,4 +1,55 @@
-extends ./includes/layouts
+extends includes/layouts
 
-block main
-    p News Management
+mixin image()
+    div(class="fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm overflow-y-auto hidden" id="image") 
+        img(class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 border-2 border-black w-2/5")
+
+mixin updateForm()
+    div(class="fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm overflow-y-auto hidden" id="update") 
+        div(class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 border-2 border-black w-2/5")
+            form(class="w-full flex flex-col items-center bg-white p-5 gap-y-4")
+                h3(class="font-bold text-xl text-center") Update News Blablabla
+                div(class="flex flex-col w-4/5 gap-y-1")
+                    label(for="title" class="font-bold") To Title
+                    textarea(cols="30", rows="3" id="title" name="title" class="px-2 py-0.5 outline-none border-2 border-black rounded focus-within:border-cyan-600")
+
+                div(class="flex flex-col w-4/5 gap-y-1")
+                    label(for="id_category_news" class="font-bold") Category
+                    select(name="id_category_news" class="px-2 py-0.5 outline-none border-2 border-black rounded focus-within:border-cyan-600") 
+                        each c in categories
+                            option(value=c.id_category_news)= c.category 
+
+                div(class="flex flex-col w-4/5 gap-y-1")
+                    label(for="img" class="font-bold") Image
+                    input(type="file" id="img" name="img" class="px-2 py-0.5 outline-none border-2 border-black rounded focus-within:border-cyan-600")
+
+                input(type="hidden" name="id_news")
+
+                button(type="submit" class="bg-cyan-600 px-2 py-0.5 rounded") Update
+
+
+block main 
+    main(class="w-full p-7 flex flex-col items-center gap-y-5")
+        h1(class="font-bold text-2xl") News Management
+
+        table(class="w-full  table-fixed border-collapse border border-black" border="black") 
+            thead 
+                tr 
+                    th(class="w-1/6 border-black border-2 bg-slate-700 text-gray-300 py-2 text-lg") ID News
+                    th(class="w-2/6 border-black border-2 bg-slate-700 text-gray-300 py-2 text-lg") Judul
+                    th(class="w-1/6 border-black border-2 bg-slate-700 text-gray-300 py-2 text-lg") Created At
+                    th(class="w-2/6 border-black border-2 bg-slate-700 text-gray-300 py-2 text-lg") Aksi
+            tbody  
+                each n in news
+                    tr  
+                        td(class="border-black border-2 p-2 text-center")= n.id_news
+                        td(class="border-black border-2 p-2 text-center")= n.title
+                        td(class="border-black border-2 p-2 text-center")= n.created_at
+                        td(class="border-black border-2 p-2 text-center") 
+                            button(type="button" data-id_category_news=n.id_category_news, data-title=n.title, data-id_news=n.id_news, class="news || px-2 py-1 rounded mx-1 bg-emerald-500 font-semibold") Update
+                            button(type="button" data-id_news=n.id_news, class="image || px-2 py-1 rounded mx-1 bg-red-500 font-semibold") Image
+
+    +image()
+    +updateForm()
+    script(src="/js/news-management.js")
+        
