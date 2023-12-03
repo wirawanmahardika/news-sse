@@ -3,14 +3,13 @@ const jumlahSubJudulContainer = document.querySelector(".jumlah-sub-judul");
 const subJudulContainer = document.getElementById("sub-judul-container");
 const contentContainer = document.getElementById("content-container");
 const form = document.getElementsByTagName("form")[0];
+const popup = document.getElementById("pop-up");
+const jumlahSubJudul = document.getElementById("jumlah-sub-judul");
 
 jumlahSubJudulContainer.addEventListener("input", (e) => {
   let jmlSubjudul = e.target.value;
   contentNumber.innerHTML = "";
 
-  //   const subJudulContainers = document.getElementsByClassName(
-  //     "sub-judul-container"
-  //   );
   while (true) {
     const element = document.querySelector(".input-content-container");
     if (element) {
@@ -28,7 +27,6 @@ jumlahSubJudulContainer.addEventListener("input", (e) => {
       "gap-y-2",
       "flex-col",
       "input-content-container"
-      //   "hidden"
     );
 
     const labelInput = document.createElement("label");
@@ -85,27 +83,6 @@ jumlahSubJudulContainer.addEventListener("input", (e) => {
       labelTxtArea,
       newtxtArea
     );
-
-    // const a = document.createElement("a");
-    // a.dataset.number = i.toString();
-    // a.classList.add(
-    //   "bg-gray-700",
-    //   "py-1",
-    //   "px-3",
-    //   "text-white",
-    //   "hover:bg-cyan-600",
-    //   "cursor-pointer"
-    // );
-    // a.textContent = i;
-    // contentNumber.append(a);
-
-    // if (jmlSubjudul > 0) {
-    //   contentContainer.classList.replace("hidden", "flex");
-    //   contentContainer.firstChild.textContent = "Content Ke-" + 1;
-    //   subJudulContainer.classList.replace("hidden", "flex");
-    //   subJudulContainer.firstChild.textContent = "Subjudul Ke-" + 1;
-    //   selectedContent = 1;
-    // }
   }
 });
 
@@ -121,8 +98,27 @@ form.addEventListener("submit", async (e) => {
     });
 
     const result = await response.json();
-    console.log(result);
+    popup.classList.remove("hidden");
+    popup.lastElementChild.textContent = result.message;
+    e.target.judul.value = "";
+    jumlahSubJudul.value = "";
+    while (true) {
+      const element = document.querySelector(".input-content-container");
+      if (element) {
+        element.remove();
+      } else {
+        break;
+      }
+    }
   } catch (error) {
     console.log(error);
   }
+});
+
+popup.firstElementChild.firstElementChild.addEventListener("click", (e) => {
+  if (e.target.tagName === "path") {
+    e.target.parentElement.parentElement.parentElement.classList.add("hidden");
+    return;
+  }
+  e.target.parentElement.parentElement.classList.add("hidden");
 });

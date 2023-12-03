@@ -1,4 +1,5 @@
 extends ./includes/layouts
+include ./includes/mixins
 
 block main 
     form(class="flex flex-col w-full items-center p-4 mx-auto md:w-3/4 lg:w-3/5")
@@ -20,16 +21,7 @@ block main
 
         div(class="jumlah-sub-judul || w-full p-3 gap-y-4")
             label(class="font-bold text-lg md:text-xl") Jumlah Sub-Judul
-            input(type="number" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600 md:py-2 md:px-3 lg:py-1" required)
-
-        //- div(id="sub-judul-container" class="w-full p-3 gap-y-2 flex-col hidden" )
-        //-     label(class="font-bold text-lg md:text-xl") Sub-Judul Ke-x
-        //-     input(type="text" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600 md:py-2 md:px-3 lg:py-1" required)
-
-        //- div(id="content-container" class="w-full p-3 gap-y-2 flex-col hidden" )
-        //-     label(class="font-bold text-lg md:text-xl") Content Ke-x
-        //-     span(class="text-cyan-600 text-sm") Note : Gunakan $S untuk menambah paragraf baru
-        //-     textarea(class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600 md:py-2 md:px-3 lg:py-1" required name="content-x", cols="30", rows="10") 
+            input(type="number" class="w-full px-2 py-1 outline-none border-2 border-gray-700 focus-within:border-cyan-600 md:py-2 md:px-3 lg:py-1" id="jumlah-sub-judul" required)
 
         button(type='submit' class="px-4 py-1 bg-cyan-600 rounded font-semibold my-2 md:font-semibold md:text-xl md:py-2 md:px-5 lg:py-1 lg:text-lg") Submit
         
@@ -37,7 +29,7 @@ block main
             div(class="content-number || flex flex-wrap justify-center w-fit max-w-[75%] mx-auto text-lg rounded overflow-hidden ")
                 
 
-
+    +popup
     script(src="/js/add-news-test.js")
     //- script(src="/js/add-news.js")
         
