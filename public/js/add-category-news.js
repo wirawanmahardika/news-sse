@@ -1,28 +1,29 @@
 const form = document.querySelector("form");
+const popup = document.getElementById("pop-up");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const dataToSend = {
-    category: e.target.category.value,
-  };
-
-  if (e.target.image?.value) {
-    dataToSend.image = "blablabla";
-  }
 
   try {
-    const unpreparedResult = await fetch("/api/v1/news/category", {
+    const unpreparedResult = await fetch("/api/v1/news", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSend),
+      body: new FormData(e.target),
       credentials: "same-origin",
     });
 
     const result = await unpreparedResult.json();
-    console.log(result);
+    popup.classList.remove("hidden");
+    popup.lastElementChild.textContent = result.message;
+    e.target.category.value = "";
   } catch (error) {
     console.log(error);
   }
+});
+
+popup.firstElementChild.firstElementChild.addEventListener("click", (e) => {
+  if (e.target.tagName === "path") {
+    e.target.parentElement.parentElement.parentElement.classList.add("hidden");
+    return;
+  }
+  e.target.parentElement.parentElement.classList.add("hidden");
 });

@@ -9,3 +9,13 @@
 .navbar-left-0 {
     left: 0;
 }
+
+.popup-animate {
+    animation: popup .6s;
+}
+
+@keyframes popup {
+    0% {transform: scale(0.8);}
+    50% {transform: scale(1.1);}
+    100% {transform: scale(1);}
+}
