@@ -5,7 +5,7 @@ Array.from(headers2).forEach((h) => {
   h.addEventListener("click", (e) => {
     const form = document.createElement("form");
     form.classList.add("flex", "w-full", "gap-x-4", "justify-between");
-    form.action = "/api/v1/news-content";
+    form.action = "/api/v1/content";
     form.method = "POST";
 
     const hiddenInput = document.createElement("input");
@@ -38,7 +38,7 @@ Array.from(headers2).forEach((h) => {
 Array.from(paragraphsContainer).forEach((div) => {
   div.addEventListener("click", (e) => {
     const form = document.createElement("form");
-    form.action = "/api/v1/news-content";
+    form.action = "/api/v1/content";
     form.method = "POST";
 
     const hiddenInput = document.createElement("input");

@@ -40,7 +40,7 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
 
-  const res = await fetch("/api/v1/news/category", {
+  const res = await fetch("/api/v1/category-news", {
     method: "PATCH",
     body: formData,
   });

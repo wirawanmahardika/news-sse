@@ -5,7 +5,7 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   try {
-    const unpreparedResult = await fetch("/api/v1/news", {
+    const unpreparedResult = await fetch("/api/v1/category-news", {
       method: "POST",
       body: new FormData(e.target),
       credentials: "same-origin",

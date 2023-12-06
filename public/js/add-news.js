@@ -3,105 +3,122 @@ const jumlahSubJudulContainer = document.querySelector(".jumlah-sub-judul");
 const subJudulContainer = document.getElementById("sub-judul-container");
 const contentContainer = document.getElementById("content-container");
 const form = document.getElementsByTagName("form")[0];
-
-let dataToFetch = [];
-let selectedContent;
+const popup = document.getElementById("pop-up");
+const jumlahSubJudul = document.getElementById("jumlah-sub-judul");
 
 jumlahSubJudulContainer.addEventListener("input", (e) => {
   let jmlSubjudul = e.target.value;
   contentNumber.innerHTML = "";
 
-  for (let i = 1; i <= jmlSubjudul; i++) {
-    dataToFetch.push({
-      subJudulKe: i,
-      subJudul: "",
-      content: "",
-    });
-
-    const a = document.createElement("a");
-    // a.setAttribute("dataset-number", i.toString());
-    a.dataset.number = i.toString();
-    a.classList.add(
-      "bg-gray-700",
-      "py-1",
-      "px-3",
-      "text-white",
-      "hover:bg-cyan-600",
-      "cursor-pointer"
-    );
-    a.textContent = i;
-    contentNumber.append(a);
-
-    if (jmlSubjudul > 0) {
-      contentContainer.classList.replace("hidden", "flex");
-      contentContainer.firstChild.textContent = "Content Ke-" + 1;
-      subJudulContainer.classList.replace("hidden", "flex");
-      subJudulContainer.firstChild.textContent = "Subjudul Ke-" + 1;
-      selectedContent = 1;
+  while (true) {
+    const element = document.querySelector(".input-content-container");
+    if (element) {
+      element.remove();
+    } else {
+      break;
     }
   }
-});
 
-contentNumber.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (selectedContent == e.target.dataset.number) return;
-  selectedContent = e.target.dataset.number;
-  subJudulContainer.lastElementChild.value = dataToFetch.find(
-    (d) => d.subJudulKe == selectedContent
-  ).subJudul;
-  contentContainer.lastElementChild.value = dataToFetch.find(
-    (d) => d.subJudulKe == selectedContent
-  ).content;
-  subJudulContainer.firstChild.textContent = "Subjudul Ke-" + selectedContent;
-  contentContainer.firstChild.textContent = "Content Ke-" + selectedContent;
-});
+  for (let i = jmlSubjudul; i > 0; i--) {
+    let inputContentContainer = document.createElement("div");
+    inputContentContainer.classList.add(
+      "w-full",
+      "p-3",
+      "gap-y-2",
+      "flex-col",
+      "input-content-container"
+    );
 
-subJudulContainer.lastElementChild.addEventListener("input", (e) => {
-  const targetData = dataToFetch.find((d) => d.subJudulKe == selectedContent);
-  dataToFetch = dataToFetch.filter((d) => d.subJudulKe != selectedContent);
-  targetData.subJudul = e.target.value;
-  dataToFetch.push(targetData);
-});
+    const labelInput = document.createElement("label");
+    labelInput.classList.add("font-bold", "text-lg", "md:text-xl");
+    labelInput.textContent = "Sub Judul Ke " + i;
 
-contentContainer.lastElementChild.addEventListener("input", (e) => {
-  const targetData = dataToFetch.find((d) => d.subJudulKe == selectedContent);
-  dataToFetch = dataToFetch.filter((d) => d.subJudulKe != selectedContent);
-  targetData.content = e.target.value;
-  dataToFetch.push(targetData);
+    const newInput = document.createElement("input");
+    newInput.name = "sub_title" + i;
+    newInput.type = "text";
+    newInput.required = true;
+    newInput.classList.add(
+      "sub-judul-container",
+      "w-full",
+      "px-2",
+      "py-1",
+      "outline-none",
+      "border-2",
+      "border-gray-700",
+      "focus-within:border-cyan-600",
+      "md:py-2",
+      "md:px-3",
+      "lg:py-1"
+    );
+
+    const labelTxtArea = document.createElement("label");
+    labelTxtArea.classList.add("font-bold", "text-lg", "md:text-xl");
+    labelTxtArea.textContent = "Content Ke " + i;
+
+    const newtxtArea = document.createElement("textarea");
+    newtxtArea.name = "content" + i;
+    newtxtArea.cols = "30";
+    newtxtArea.rows = "10";
+    newtxtArea.required = true;
+    newtxtArea.classList.add(
+      "content-container",
+      "w-full",
+      "px-2",
+      "py-1",
+      "outline-none",
+      "border-2",
+      "border-gray-700",
+      "focus-within:border-cyan-600",
+      "md:py-2",
+      "md:px-3",
+      "lg:py-1"
+    );
+
+    e.target.parentElement.after(
+      inputContentContainer,
+      inputContentContainer.cloneNode(true)
+    );
+    e.target.parentElement.nextElementSibling.append(labelInput, newInput);
+    e.target.parentElement.nextElementSibling.nextElementSibling.append(
+      labelTxtArea,
+      newtxtArea
+    );
+  }
 });
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const dataToSend = {
-    title: e.target.judul.value,
-    id_category_news: e.target.category.value,
-    contents: dataToFetch.map((c) => {
-      const subJudul = c.subJudul;
-      delete c.subJudulKe;
-      delete c.subJudul;
-      return {
-        ...c,
-        sub_title: subJudul,
-      };
-    }),
-  };
-
-  console.log(dataToSend);
+  const formData = new FormData(e.target);
 
   try {
-    const unpreparedResult = await fetch("/api/v1/content", {
+    const response = await fetch("http://localhost:5173/api/v1/news", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(dataToSend),
+      body: formData,
       credentials: "same-origin",
     });
-    const result = await unpreparedResult.json();
-    console.log(result);
-    dataToFetch = [];
-    contentNumber.innerHTML = "";
+
+    const result = await response.json();
+    popup.classList.remove("hidden");
+    popup.lastElementChild.textContent = result.message;
+    e.target.judul.value = "";
+    jumlahSubJudul.value = "";
+    while (true) {
+      const element = document.querySelector(".input-content-container");
+      if (element) {
+        element.remove();
+      } else {
+        break;
+      }
+    }
   } catch (error) {
     console.log(error);
   }
+});
+
+popup.firstElementChild.firstElementChild.addEventListener("click", (e) => {
+  if (e.target.tagName === "path") {
+    e.target.parentElement.parentElement.parentElement.classList.add("hidden");
+    return;
+  }
+  e.target.parentElement.parentElement.classList.add("hidden");
 });

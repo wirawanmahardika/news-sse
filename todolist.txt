@@ -1,3 +1,1 @@
 - perf: menggunakan URL.createObjectUrl() ketika menggunakan gambar blob dari server
-- update: perbaiki path api backend agar lebih sesuai 
-- style: popup message setelah add data news (category, news, atau content)
