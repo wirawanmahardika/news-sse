@@ -8,6 +8,7 @@ import othersController from "../controller/others-controller.js";
 const clientSideRoute = express.Router();
 
 clientSideRoute.get("/", othersController.homeView);
+clientSideRoute.get("/search-news", newsController.searchNews);
 clientSideRoute.get("/read-news", newsController.readNews);
 clientSideRoute.get("/category-news", newsController.categoryNews);
 

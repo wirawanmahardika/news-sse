@@ -3,8 +3,7 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        //- meta(http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com; img-src self; font-src 'self' https://fonts.gstatic.com; connect-src 'self' http://localhost:1000/api/v1/content  https://www.google-analytics.com;")
-        title News
+        title ABNews
         link(rel='preconnect' href='https://fonts.googleapis.com')
         link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin='')
         link(href='https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap' rel='stylesheet')
@@ -12,16 +11,17 @@ html(lang="en")
     body(class="font-poppins") 
         header(class="sm:flex sm:bg-cyan-600 sm:justify-between sm:items-center sm:sticky sm:top-0 lg:grid lg:grid-cols-3")
             div(class="p-5 bg-cyan-600") 
-                h1(class="font-bold text-6xl text-center text-white sm:text-4xl md:text-5xl") LOGO
+                h1(class="font-bold text-6xl text-center text-white sm:text-4xl md:text-5xl") AB
+                    span(class="text-yellow-500") News
             div(class="grid p-5 bg-white sm:bg-cyan-600")
                 div(class="flex group border-gray-500 focus-within:border-cyan-600 border-2 rounded overflow-hidden sm:border-none sm:items-center sm:rounded-none sm:rounded-s ")
-                    input(type="search" placeholder="Search here..." class="w-[85%] px-3 py-2 outline-none rounded-s text-lg h-full sm:w-[80%] sm:py-0.5 md:py-1 sm:border-2 sm:focus-within:border-black")
+                    input(id="input-search" type="search" placeholder="Search here..." class="w-[85%] px-3 py-2 outline-none rounded-s text-lg h-full sm:w-[80%] sm:py-0.5 md:py-1 sm:border-2 sm:focus-within:border-black")
 
-                    div(class="h-full w-[15%] grid place-items-center cursor-pointer rounded-e group-focus-within:bg-black group-hover:bg-black sm:bg-black sm:w-[20%] ")
+                    div(class="btn-search || h-full w-[15%] grid place-items-center cursor-pointer rounded-e group-focus-within:bg-black group-hover:bg-black sm:bg-black sm:w-[20%] ")
                         svg(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke-width='1.5' class="w-6 h-6 stroke-gray-600 group-focus-within:stroke-white group-hover:stroke-white")
                             path(stroke-linecap='round' stroke-linejoin='round' d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z')
 
-                    div(class="navbar-btn" class="hidden border border-white place-items-center py-2 px-3 sm:w-fit sm:ml-4 sm:grid lg:hidden")
+                    div(class="navbar-btn || hidden border border-white place-items-center py-2 px-3 sm:w-fit sm:ml-4 sm:grid lg:hidden")
                         svg.w-6.h-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke-width='1.5' stroke='currentColor')
                             path(stroke-linecap='round' stroke-linejoin='round' d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5')
 

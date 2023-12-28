@@ -19,6 +19,7 @@ serverSideRoute.get("/news/:id_news", newController.getNewsByID);
 serverSideRoute.post("/content", newController.updateNewsContent); //
 
 serverSideRoute.post("/login", userController.login);
+serverSideRoute.post("/logout", userController.logout);
 
 serverSideRoute.use(serverSideErrorHandler);
 

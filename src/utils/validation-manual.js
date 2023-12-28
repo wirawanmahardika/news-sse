@@ -25,14 +25,3 @@ export const addNewNewsValidation = (bodies) => {
   return data;
 };
 
-// const result = addNewNewsValidation({
-//   nama: "wirawan",
-//   kelas: "H",
-//   sub_title1: "asdf",
-//   content1: "asdf",
-//   sub_title2: "asdf2",
-//   content2: "asdf2",
-//   sub_title3: "asdf3",
-//   content3: "asdf3",
-// });
-// console.log(result);

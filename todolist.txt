@@ -1,1 +1,0 @@
-- perf: menggunakan URL.createObjectUrl() ketika menggunakan gambar blob dari server

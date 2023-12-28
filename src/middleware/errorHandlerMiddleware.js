@@ -15,7 +15,6 @@ const errorToHomeMid = (err, req, res, next) => {
 
 const serverSideErrorHandler = async (err, req, res, next) => {
   if (err) {
-    console.log(err);
     return res.status(500).json({
       message: "Something went wrong",
     });

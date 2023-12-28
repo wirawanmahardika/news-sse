@@ -47,8 +47,8 @@ form.addEventListener("submit", async (e) => {
     body: formData,
   });
 
-  const data = await res.json();
-  console.log(data);
+  // const data = await res.json();
+  // console.log(data);
 });
 
 update.addEventListener("click", (e) => {

@@ -76,7 +76,6 @@ const addNewNews = async (req, res, next) => {
       contents: addNewNewsValidation(req.body),
     };
 
-    console.log(dataFromClient);
     const reqBody = validation(addNewNewsSchema, dataFromClient);
 
     const result = await prisma.news.create({
@@ -157,7 +156,6 @@ const getCategoryNewsByID = async (req, res, next) => {
       where: { id_category_news: parseInt(req.params["id_category_news"]) },
       select: { img: true },
     });
-    console.log(news);
     return res.json({
       img:
         "data:image/jpeg;base64, " + Buffer.from(news.img).toString("base64"),
@@ -173,7 +171,6 @@ const getNewsByID = async (req, res, next) => {
       where: { id_news: parseInt(req.params.id_news) },
       select: { img: true },
     });
-    console.log(news);
     return res.json({
       img:
         "data:image/jpeg;base64, " + Buffer.from(news.img).toString("base64"),

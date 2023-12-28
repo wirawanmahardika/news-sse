@@ -1,6 +1,23 @@
 import dayjs from "dayjs";
 import { prisma } from "../../application/database.js";
 
+const searchNews = async (req,res,next) => {
+  const judul = req.query.judul
+  if(!judul) {
+    res.redirect('/')
+    return;
+  }
+
+  const news = await prisma.news.findMany({where: {title: {contains: judul}}})
+  res.render("search-news", {
+    authenticated: req.isAuthenticated(),
+    news: news.map(n => {
+      n.img = "data:image/jpeg;base64,"+Buffer.from(n.img).toString("base64")
+      return n
+    })
+  })
+}
+
 const readNews = async (req, res, next) => {
   try {
     if (!req.query.news) {
@@ -40,7 +57,6 @@ const categoryNews = async (req, res, next) => {
       },
     });
 
-    console.log(newsCategories);
     res.render("kategori-news", {
       newsCategories,
       authenticated: req.isAuthenticated(),
@@ -86,8 +102,6 @@ const newsManagement = async (req, res, next) => {
       },
     });
 
-    console.log(categories);
-    console.log(news);
 
     res.render("news-management", {
       categories,
@@ -137,6 +151,7 @@ const newsContentManagement = async (req, res, next) => {
 };
 
 export default {
+  searchNews,
   readNews,
   addNews,
   addCategoryNews,
