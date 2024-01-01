@@ -40,8 +40,9 @@ block main
                         td(class="border-black border-2 p-2 text-center")= category.category
                         td(class="border-black border-2 p-2 text-center")= category.created_at
                         td(class="border-black border-2 p-2 text-center")
+                            button(type="button" data-id_category_news=category.id_category_news, class="delete-category || px-2 py-1 rounded mx-1 bg-red-500 font-semibold") Delete
                             button(type="button" data-id_category_news=category.id_category_news, data-category=category.category, class="category || px-2 py-1 rounded mx-1 bg-emerald-500 font-semibold") Update
-                            button(type="button" data-id_category_news=category.id_category_news, class="image || px-2 py-1 rounded mx-1 bg-red-500 font-semibold") Image
+                            button(type="button" data-id_category_news=category.id_category_news, class="image || px-2 py-1 rounded mx-1 bg-sky-500 font-semibold") Image
 
     +updateForm        
     +image()

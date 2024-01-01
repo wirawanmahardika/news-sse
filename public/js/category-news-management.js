@@ -3,6 +3,7 @@ const categories = document.getElementsByClassName("category");
 const image = document.getElementById("image");
 const update = document.getElementById("update");
 const form = document.getElementsByTagName("form")[0];
+const deleteCategoriesBtn = document.querySelectorAll(".delete-category")
 
 Array.from(images).forEach((element) => {
   element.addEventListener("click", async (e) => {
@@ -52,3 +53,20 @@ update.addEventListener("click", (e) => {
     e.target.classList.add("hidden");
   }
 });
+
+Array.from(deleteCategoriesBtn).forEach(deleteBtn => {
+  deleteBtn.addEventListener("click", async (e) => {
+    const response = await fetch("/api/v1/category-news/" + e.target.dataset.id_category_news, {
+      method: "DELETE",
+      credentials: "same-origin",
+    })
+
+    if(response.status !== 200) {
+      alert("Gagal menghapus data")
+      return
+    }
+
+    const data = await response.json()
+    alert(data.message)
+  })
+})

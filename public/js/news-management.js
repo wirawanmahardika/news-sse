@@ -3,6 +3,7 @@ const news = document.getElementsByClassName("news");
 const image = document.getElementById("image");
 const update = document.getElementById("update");
 const form = document.getElementsByTagName("form")[0];
+const deleteNews = document.querySelectorAll(".delete-news")
 
 Array.from(images).forEach((element) => {
   element.addEventListener("click", async (e) => {
@@ -47,8 +48,8 @@ form.addEventListener("submit", async (e) => {
     body: formData,
   });
 
-  // const data = await res.json();
-  // console.log(data);
+  const data = await res.json();
+  console.log(data);
 });
 
 update.addEventListener("click", (e) => {
@@ -56,3 +57,22 @@ update.addEventListener("click", (e) => {
     e.target.classList.add("hidden");
   }
 });
+
+Array.from(deleteNews).forEach(news => {
+  news.addEventListener("click", async e => {
+    const id_news = e.target.dataset.id_news
+    
+    const response = await fetch("/api/v1/news/" + id_news, {
+      method: "DELETE",
+      credentials: "same-origin"
+    })
+
+    if(response.status !== 200) {
+      alert("Gagal menghapus berita")
+      return
+    }
+
+    const data = await response.json()
+    alert(data.message)
+  })
+})

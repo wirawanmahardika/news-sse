@@ -91,7 +91,7 @@ form.addEventListener("submit", async (e) => {
   const formData = new FormData(e.target);
 
   try {
-    const response = await fetch("http://localhost:5173/api/v1/news", {
+    const response = await fetch("/api/v1/news", {
       method: "POST",
       body: formData,
       credentials: "same-origin",

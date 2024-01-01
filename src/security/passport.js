@@ -1,6 +1,5 @@
 import { Strategy } from "passport-local";
 import { prisma } from "../application/database.js";
-import bcrypt from "bcrypt";
 
 export function initializePassport(passport) {
   passport.use(
@@ -11,7 +10,7 @@ export function initializePassport(passport) {
         return done(null, false, { message: "Username tidak terdaftar" });
       }
 
-      if (!(await bcrypt.compare(password, user.password))) {
+      if (password !== user.password) {
         return done(null, false, { message: "Password salah" });
       }
 

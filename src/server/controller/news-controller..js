@@ -41,6 +41,25 @@ const addCategoryNews = async (req, res, next) => {
   }
 };
 
+const deleteCategoryNews = async (req, res, next) => {
+  try {
+    const idCategory = parseInt(req.params.id_category_news)
+
+    const result = await prisma.$transaction([
+      prisma.content.deleteMany({where: {news: {id_category_news: idCategory}}}),
+      prisma.news.deleteMany({where: {id_category_news: idCategory}}),
+      prisma.category_news.delete({where: {id_category_news: idCategory}})
+    ])
+    
+    console.log(result)
+
+    return res.json({message: "Berhasil menghapus category news"})
+  } catch (error) {
+    console.log(error)
+    next(error);
+  }
+};
+
 const updateCategoryNews = async (req, res, next) => {
   try {
     const result = validation(updateCategoryNewsSchema, {
@@ -99,6 +118,23 @@ const addNewNews = async (req, res, next) => {
     res.status(201).json({
       message: "Berhasil menambah berita " + result.title,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteNews = async (req, res, next) => {
+  try {
+    const id_news = parseInt(req.params.id_news)
+
+    const result = await prisma.$transaction([
+      prisma.content.deleteMany({where: {news: {id_news}}}),
+      prisma.news.delete({where: {id_news}})
+    ])
+
+    console.log(result)
+
+    res.json({message: "Berhasil menghapus berita dengan id " + id_news})
   } catch (error) {
     next(error);
   }
@@ -183,7 +219,9 @@ const getNewsByID = async (req, res, next) => {
 export default {
   addCategoryNews,
   updateCategoryNews,
+  deleteCategoryNews,
   addNewNews,
+  deleteNews,
   updateNews,
   getAllNewsCategory,
   getCategoryNewsByID,
