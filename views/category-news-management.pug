@@ -44,6 +44,20 @@ block main
                             button(type="button" data-id_category_news=category.id_category_news, data-category=category.category, class="category || px-2 py-1 rounded mx-1 bg-emerald-500 font-semibold") Update
                             button(type="button" data-id_category_news=category.id_category_news, class="image || px-2 py-1 rounded mx-1 bg-sky-500 font-semibold") Image
 
+        div(class="paging || flex mx-auto w-fit rounded overflow-hidden text-gray-300")
+            if currentPage > 2
+                a(href="/admin/category-news-management?skip="+(currentPage-1), class=`p-3 py-1 bg-red-700 hover:bg-red-900`) <<
+
+            - var i = currentPage - 1
+            while i <= currentPage + 1
+                if i !== 0 &&  i !== maxPage + 1
+                    a(href="/admin/category-news-management?skip="+i, class="p-3 py-1 bg-gray-800")= i++
+                else 
+                    - i++
+
+            if currentPage < maxPage
+                a(href="/admin/category-news-management?skip="+(currentPage+1), class=`p-3 py-1 bg-red-700 hover:bg-red-900`) >>
+
     +updateForm        
     +image()
     script(src="/js/category-news-management.js", type="text/javascript")

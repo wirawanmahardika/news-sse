@@ -1,18 +1,18 @@
 import dayjs from "dayjs";
 import { prisma } from "../../application/database.js";
 
-const searchNews = async (req,res,next) => {
+const searchNews = async (req, res, next) => {
   const judul = req.query.judul
-  if(!judul) {
+  if (!judul) {
     res.redirect('/')
     return;
   }
 
-  const news = await prisma.news.findMany({where: {title: {contains: judul}}})
+  const news = await prisma.news.findMany({ where: { title: { contains: judul } } })
   res.render("search-news", {
     authenticated: req.isAuthenticated(),
     news: news.map(n => {
-      n.img = "data:image/jpeg;base64,"+Buffer.from(n.img).toString("base64")
+      n.img = "data:image/jpeg;base64," + Buffer.from(n.img).toString("base64")
       return n
     })
   })
@@ -117,8 +117,18 @@ const newsManagement = async (req, res, next) => {
 };
 
 const categoryNewsManagement = async (req, res, next) => {
-  const categoryNews = await prisma.category_news.findMany({});
+  const skip = req.query.skip ? parseInt(req.query.skip) : 1
+  const categoryNews = await prisma.category_news.findMany({
+    take: 5,
+    skip: 5 * (skip - 1)
+  });
+  const countCategoryNews = await prisma.category_news.count()
+  const ceilCount = Math.ceil(countCategoryNews/5)
+  
+
   res.render("category-news-management", {
+    currentPage: skip,
+    maxPage: ceilCount,
     authenticated: req.isAuthenticated(),
     categoryNews: categoryNews.map((cn) => {
       cn.created_at = dayjs(cn.created_at).format("HH:mm, DD/MM/YYYY");

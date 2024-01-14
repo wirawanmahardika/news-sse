@@ -86,6 +86,16 @@ const updateCategoryNews = async (req, res, next) => {
   }
 };
 
+const countCategoriesNews = async(req,res,next) => {
+  try {
+    const countResult = await prisma.category_news.count()
+    return res.json({count: Math.ceil(countResult/5)})
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
 const addNewNews = async (req, res, next) => {
   try {
     const dataFromClient = {
@@ -220,6 +230,7 @@ export default {
   addCategoryNews,
   updateCategoryNews,
   deleteCategoryNews,
+  countCategoriesNews,
   addNewNews,
   deleteNews,
   updateNews,
