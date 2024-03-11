@@ -1,10 +1,13 @@
 extends includes/layouts
 
 block main 
-    main(class="w-full mx-auto p-3 gap-y-2 flex flex-col")
+    main(class="w-full mx-auto p-3 gap-y-2 flex flex-col lg:w-4/5")
         each berita in news 
             a(href="/read-news?news="+berita.id_news , class="toggle-to-read || flex justify-between border-2 border-black text-center shadow group")
                 div(class="w-2/6 flex items-center justify-center")
                     img(src=berita.img, alt="image")
                 div(class="w-4/6 flex items-center justify-center p-2 text-xs sm:text-sm md:text-lg lg:text-xl group-hover:bg-sky-600 hover:text-white")
                     h3= berita.title
+        else 
+            div(class="w-full h-96 flex justify-center items-center")
+                p Berita tidak ditemukan

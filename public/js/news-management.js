@@ -74,5 +74,6 @@ Array.from(deleteNews).forEach(news => {
 
     const data = await response.json()
     alert(data.message)
+    window.location.reload()
   })
 })

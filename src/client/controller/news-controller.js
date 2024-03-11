@@ -9,6 +9,7 @@ const searchNews = async (req, res, next) => {
   }
 
   const news = await prisma.news.findMany({ where: { title: { contains: judul } } })
+  console.log(news)
   res.render("search-news", {
     authenticated: req.isAuthenticated(),
     news: news.map(n => {
