@@ -9,11 +9,10 @@ const searchNews = async (req, res, next) => {
   }
 
   const news = await prisma.news.findMany({ where: { title: { contains: judul } } })
-  console.log(news)
   res.render("search-news", {
     authenticated: req.isAuthenticated(),
     news: news.map(n => {
-      n.img = "data:image/jpeg;base64," + Buffer.from(n.img).toString("base64")
+      n.img = "/api/v1/news/"+n.id_news
       return n
     })
   })
@@ -29,20 +28,11 @@ const readNews = async (req, res, next) => {
       where: {
         id_news: parseInt(req.query.news),
       },
-      include: {
-        content: true,
-      },
-    });
-
-    news.content = news.content.map((c) => {
-      c.content = c.content.split("$S");
-      return c;
     });
     res.render("read-news", {
       title: news.title,
-      img:
-        "data:image/jpeg;base64, " + Buffer.from(news.img).toString("base64"),
-      contents: news.content,
+      img: "/api/v1/news/"+news.id_news,
+      content: news.content,
       authenticated: req.isAuthenticated(),
     });
   } catch (error) {
@@ -144,8 +134,8 @@ const newsContentManagement = async (req, res, next) => {
       id_news: parseInt(req.params.id_news),
     },
     select: {
+      id_news: true,
       title: true,
-      img: true,
       content: true,
     },
   });
@@ -153,7 +143,7 @@ const newsContentManagement = async (req, res, next) => {
   res.render("news-content-management", {
     authenticated: req.isAuthenticated(),
     newsTitle: news.title,
-    img: "data:image/jpeg;base64, " + Buffer.from(news.img).toString("base64"),
+    img: "/api/v1/news/"+news.id_news,
     contents: news.content.map((c) => {
       c.content = c.content.split("$S");
       return c;

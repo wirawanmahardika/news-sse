@@ -4,14 +4,7 @@ export const addNewNewsSchema = Joi.object({
   title: Joi.string().max(200).min(1).required(),
   img: Joi.binary().required(),
   id_category_news: Joi.number().required(),
-  contents: Joi.array()
-    .items(
-      Joi.object({
-        sub_title: Joi.string().max(200).min(1).required(),
-        content: Joi.string().max(65500).required(),
-      })
-    )
-    .required(),
+  content: Joi.string()
 }).required();
 
 export const updateNewsSchema = Joi.object({

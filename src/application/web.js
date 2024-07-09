@@ -7,10 +7,12 @@ import session from "express-session";
 import { initializePassport } from "../security/passport.js";
 import dotenv from "dotenv";
 import mysqlSessionStore from "../config/session-store.js";
+import cors from "cors"
 
 dotenv.config();
 const web = express();
 
+web.use(cors())
 web.use(helmet());
 web.set("view engine", "pug");
 web.use(express.json());

@@ -13,6 +13,8 @@ model User {
   email String @db.VarChar(101)
   fullname String @db.VarChar(101)
   password String @db.VarChar(101)
+
+  @@map("users")
 }
 
 model Category_news {
@@ -22,6 +24,8 @@ model Category_news {
   created_at DateTime @db.Timestamp()
 
   news News[]
+
+  @@map("category_news")
 }
 
 model News {
@@ -29,17 +33,18 @@ model News {
   id_category_news Int @db.UnsignedInt
   img Bytes? @db.MediumBlob
   title String @db.VarChar(201)
+  content String @db.Text
   created_at DateTime @db.Timestamp()
 
   category_news Category_news @relation(fields: [id_category_news], references: [id_category_news])
-  content Content[]
+  @@map("news")
 }
 
-model Content {
-  id_content Int @id @db.UnsignedInt @default(autoincrement())
-  id_news Int @db.UnsignedInt
-  sub_title String @db.VarChar(201)
-  content String @db.Text
+// model Content {
+//   id_content Int @id @db.UnsignedInt @default(autoincrement())
+//   id_news Int @db.UnsignedInt
+//   sub_title String @db.VarChar(201)
+//   content String @db.Text
 
-  news News @relation(fields: [id_news], references: [id_news])
-}
+//   news News @relation(fields: [id_news], references: [id_news])
+// }

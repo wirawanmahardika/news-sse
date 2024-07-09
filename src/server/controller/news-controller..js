@@ -8,7 +8,6 @@ import {
   updateNewsSchema,
 } from "../validation/news-validation.js";
 import validation from "../validation/validate.js";
-import { addNewNewsValidation } from "../../utils/validation-manual.js";
 
 const getAllNewsCategory = async (req, res, next) => {
   try {
@@ -102,7 +101,7 @@ const addNewNews = async (req, res, next) => {
       title: req.body.judul,
       id_category_news: req.body.category,
       img: req.file.buffer,
-      contents: addNewNewsValidation(req.body),
+      content:req.body.content,
     };
 
     const reqBody = validation(addNewNewsSchema, dataFromClient);
@@ -112,14 +111,10 @@ const addNewNews = async (req, res, next) => {
         img: reqBody.img,
         title: reqBody.title,
         created_at: dayjs(),
+        content: reqBody.content,
         category_news: {
           connect: {
             id_category_news: reqBody.id_category_news,
-          },
-        },
-        content: {
-          createMany: {
-            data: reqBody.contents,
           },
         },
       },
@@ -196,31 +191,29 @@ const updateNewsContent = async (req, res, next) => {
   }
 };
 
-const getCategoryNewsByID = async (req, res, next) => {
+const getImageCategoryNewsByID = async (req, res, next) => {
   try {
     const news = await prisma.category_news.findUnique({
       where: { id_category_news: parseInt(req.params["id_category_news"]) },
       select: { img: true },
     });
-    return res.json({
-      img:
-        "data:image/jpeg;base64, " + Buffer.from(news.img).toString("base64"),
-    });
+
+    res.set("Content-Type", "image/jpeg")
+    return res.send(news.img)
   } catch (error) {
     next(error);
   }
 };
 
-const getNewsByID = async (req, res, next) => {
+const getImageNewsById = async (req, res, next) => {
   try {
     const news = await prisma.news.findUnique({
       where: { id_news: parseInt(req.params.id_news) },
       select: { img: true },
     });
-    return res.json({
-      img:
-        "data:image/jpeg;base64, " + Buffer.from(news.img).toString("base64"),
-    });
+
+    res.set("Content-Type", "image/jpeg")
+    return res.send(news.img);
   } catch (error) {
     next(error);
   }
@@ -235,7 +228,7 @@ export default {
   deleteNews,
   updateNews,
   getAllNewsCategory,
-  getCategoryNewsByID,
-  getNewsByID,
+  getImageCategoryNewsByID,
+  getImageNewsById,
   updateNewsContent,
 };

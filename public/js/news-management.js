@@ -7,9 +7,7 @@ const deleteNews = document.querySelectorAll(".delete-news")
 
 Array.from(images).forEach((element) => {
   element.addEventListener("click", async (e) => {
-    const response = await fetch("/api/v1/news/" + e.target.dataset.id_news);
-    const imageNews = await response.json();
-    image.firstElementChild.setAttribute("src", imageNews.img);
+    image.firstElementChild.setAttribute("src", "/api/v1/news/" + e.target.dataset.id_news);
     image.firstElementChild.setAttribute(
       "alt",
       e.target.parentElement.previousElementSibling.previousElementSibling

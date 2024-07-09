@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { prisma } from "../../application/database.js";
 
 const homeView = async (req, res, next) => {
@@ -18,13 +17,11 @@ const homeView = async (req, res, next) => {
 
     res.render("index", {
       recentNews: recentNews.map((cn) => {
-        cn.img =
-          "data:image/jpeg;base64, " + Buffer.from(cn.img).toString("base64");
+        cn.img = "/api/v1/news/" + cn.id_news
         return cn;
       }),
       categoryNews: categoryNews.map((cn) => {
-        cn.img =
-          "data:image/jpeg;base64, " + Buffer.from(cn.img).toString("base64");
+        cn.img = "/api/v1/category-news/" + cn.id_category_news
         return cn;
       }),
       authenticated: req.isAuthenticated(),
@@ -34,7 +31,7 @@ const homeView = async (req, res, next) => {
   }
 };
 
-const errorView = (req, res, next) => {
+const errorView = (req, res) => {
   res.render("error", {
     error: req.query.message || "Terjadi kesalahan",
   });
