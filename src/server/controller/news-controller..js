@@ -4,18 +4,27 @@ import {
   addNewCategoryNewsSchema,
   addNewNewsSchema,
   updateCategoryNewsSchema,
-  updateNewsContentSchema,
   updateNewsSchema,
 } from "../validation/news-validation.js";
 import validation from "../validation/validate.js";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const getAllNewsCategory = async (req, res, next) => {
   try {
-    const news = await prisma.category_news.findMany();
-    res.json({
-      message: "Berhasil mengambil semua category berita",
-      data: news,
+    const categories = await prisma.category_news.findMany({
+      select: {
+        category: true, id_category_news: true, created_at: true,
+      }
     });
+
+    res.json(categories.map(c => {
+      c.created_at = dayjs(c.created_at).format("DD/MM/YYYY")
+      c.ilustrate = process.env.URL + '/api/v1/category-news/' + c.id_category_news
+      c.url = process.env.URL + "/category-news#" + c.category
+      return c
+    }))
   } catch (error) {
     next(error);
   }
@@ -32,9 +41,7 @@ const addCategoryNews = async (req, res, next) => {
       data: reqBody,
     });
 
-    res.status(201).json({
-      message: "Berhasil membuat category " + result.category,
-    });
+    res.status(201).send("Berhasil membuat category " + result.category)
   } catch (error) {
     next(error);
   }
@@ -44,17 +51,13 @@ const deleteCategoryNews = async (req, res, next) => {
   try {
     const idCategory = parseInt(req.params.id_category_news)
 
-    const result = await prisma.$transaction([
-      prisma.content.deleteMany({where: {news: {id_category_news: idCategory}}}),
-      prisma.news.deleteMany({where: {id_category_news: idCategory}}),
-      prisma.category_news.delete({where: {id_category_news: idCategory}})
+    await prisma.$transaction([
+      prisma.news.deleteMany({ where: { id_category_news: idCategory } }),
+      prisma.category_news.delete({ where: { id_category_news: idCategory } })
     ])
-    
-    console.log(result)
 
-    return res.json({message: "Berhasil menghapus category news"})
+    return res.send("Berhasil menghapus category news")
   } catch (error) {
-    console.log(error)
     next(error);
   }
 };
@@ -77,20 +80,49 @@ const updateCategoryNews = async (req, res, next) => {
       },
     });
 
-    return res.json({
-      message: "Berhasil mengubah category news",
-    });
+    return res.send("Berhasil mengubah category news")
   } catch (error) {
     next(error);
   }
 };
 
-const countCategoriesNews = async(req,res,next) => {
+const countCategoriesNews = async (req, res, next) => {
   try {
     const countResult = await prisma.category_news.count()
-    return res.json({count: Math.ceil(countResult/5)})
+    return res.json({ count: Math.ceil(countResult / 5) })
   } catch (error) {
     console.log(error)
+    next(error)
+  }
+}
+
+const getNews = async (req, res, next) => {
+  try {
+    const data = await prisma.news.findMany({
+      select: {
+        id_news: true,
+        title: true,
+        created_at: true,
+        content: true,
+        category_news: {
+          select: {
+            category: true, id_category_news: true
+          }
+        }
+      }
+    })
+
+    const result = data.map(d => {
+      d.category = d.category_news.category
+      d.created_at = dayjs(d.created_at).format("DD/MM/YYYY")
+      d.ilustrate = process.env.URL + "/api/v1/news/" + d.id_news
+      d.id_category = d.category_news.id_category_news
+      d.url = process.env.URL + "/read-news?news=" + d.id_news
+      delete d.category_news
+      return d
+    })
+    return res.json(result)
+  } catch (error) {
     next(error)
   }
 }
@@ -101,7 +133,7 @@ const addNewNews = async (req, res, next) => {
       title: req.body.judul,
       id_category_news: req.body.category,
       img: req.file.buffer,
-      content:req.body.content,
+      content: req.body.content,
     };
 
     const reqBody = validation(addNewNewsSchema, dataFromClient);
@@ -120,9 +152,7 @@ const addNewNews = async (req, res, next) => {
       },
     });
 
-    res.status(201).json({
-      message: "Berhasil menambah berita " + result.title,
-    });
+    res.status(201).send("Berhasil menambah berita " + result.title)
   } catch (error) {
     next(error);
   }
@@ -131,15 +161,8 @@ const addNewNews = async (req, res, next) => {
 const deleteNews = async (req, res, next) => {
   try {
     const id_news = parseInt(req.params.id_news)
-
-    const result = await prisma.$transaction([
-      prisma.content.deleteMany({where: {news: {id_news}}}),
-      prisma.news.delete({where: {id_news}})
-    ])
-
-    console.log(result)
-
-    res.json({message: "Berhasil menghapus berita dengan id " + id_news})
+    await prisma.news.delete({ where: { id_news } })
+    res.send("Berhasil menghapus berita")
   } catch (error) {
     next(error);
   }
@@ -152,6 +175,7 @@ const updateNews = async (req, res, next) => {
       id_category_news: req.body.id_category_news,
       title: req.body.title,
       img: req.file?.buffer,
+      content: req.body.content
     });
 
     await prisma.news.update({
@@ -162,30 +186,11 @@ const updateNews = async (req, res, next) => {
         id_category_news: result.id_category_news,
         img: result.img,
         title: result.title,
+        content: result.content
       },
     });
 
-    return res.json({
-      message: "Berhasil update news",
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const updateNewsContent = async (req, res, next) => {
-  try {
-    const result = validation(updateNewsContentSchema, req.body);
-    const updateResult = await prisma.content.update({
-      where: {
-        id_content: result.id_content,
-      },
-      data: {
-        content: result.content,
-        sub_title: result.sub_title,
-      },
-    });
-    res.redirect("/admin/news-content-management/" + updateResult.id_news);
+    return res.send("Berhasil update news");
   } catch (error) {
     next(error);
   }
@@ -212,7 +217,7 @@ const getImageNewsById = async (req, res, next) => {
       select: { img: true },
     });
 
-    res.set("Content-Type", "image/jpeg")
+    res.set("Content-Type", "jpeg")
     return res.send(news.img);
   } catch (error) {
     next(error);
@@ -224,11 +229,11 @@ export default {
   updateCategoryNews,
   deleteCategoryNews,
   countCategoriesNews,
+  getNews,
   addNewNews,
   deleteNews,
   updateNews,
   getAllNewsCategory,
   getImageCategoryNewsByID,
   getImageNewsById,
-  updateNewsContent,
 };

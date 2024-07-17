@@ -33,7 +33,8 @@ const homeView = async (req, res, next) => {
 
 const errorView = (req, res) => {
   res.render("error", {
-    error: req.query.message || "Terjadi kesalahan",
+    // error: req.query.message || "Terjadi kesalahan",
+    error: "Terjadi kesalahan",
   });
 };
 

@@ -18,9 +18,7 @@ serverSideRoute.post("/news", multer().single('img'), newController.addNewNews);
 serverSideRoute.patch("/news", multer().single('img'), newController.updateNews); //
 serverSideRoute.delete("/news/:id_news", newController.deleteNews);
 serverSideRoute.get("/news/:id_news", newController.getImageNewsById);
-// serverSideRoute.get("/news/:id_news", newController.getNewsByID);
-
-serverSideRoute.post("/content", newController.updateNewsContent); //
+serverSideRoute.get("/news", newController.getNews);
 
 serverSideRoute.post("/login", userController.login);
 serverSideRoute.post("/logout", userController.logout);

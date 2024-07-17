@@ -12,7 +12,7 @@ export const updateNewsSchema = Joi.object({
   id_category_news: Joi.number(),
   title: Joi.string(),
   img: Joi.binary(),
-  // id_contents: Joi.array(Joi.number()).required(),
+  content: Joi.string()
 }).required();
 
 
