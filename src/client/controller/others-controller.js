@@ -1,4 +1,7 @@
 import { prisma } from "../../app/database.js";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const homeView = async (req, res, next) => {
   try {
@@ -17,11 +20,11 @@ const homeView = async (req, res, next) => {
 
     res.render("index", {
       recentNews: recentNews.map((cn) => {
-        cn.img = "/api/v1/news/" + cn.id_news
+        cn.img = process.env.URL + "/api/v1/news/" + cn.id_news
         return cn;
       }),
       categoryNews: categoryNews.map((cn) => {
-        cn.img = "/api/v1/category-news/" + cn.id_category_news
+        cn.img = process.env.URL + "/api/v1/category-news/" + cn.id_category_news
         return cn;
       }),
       authenticated: req.isAuthenticated(),

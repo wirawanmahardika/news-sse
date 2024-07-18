@@ -1,6 +1,9 @@
 import { prisma } from "../../app/database.js";
 import newsValidation from "../validation/news-validation.js";
 import validation from "../validation/validate.js";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const searchNews = async (req, res, next) => {
   const judul = validation(newsValidation.searchNews, req.query.judul)
@@ -9,7 +12,7 @@ const searchNews = async (req, res, next) => {
   res.render("search-news", {
     authenticated: req.isAuthenticated(),
     news: news.map(n => {
-      n.img = "/api/v1/news/" + n.id_news
+      n.img = process.env.URL + "/api/v1/news/" + n.id_news
       return n
     })
   })
@@ -22,7 +25,7 @@ const readNews = async (req, res, next) => {
 
     res.render("read-news", {
       title: news.title,
-      img: "/api/v1/news/" + news.id_news,
+      img: process.env.URL + "/api/v1/news/" + news.id_news,
       content: news.content,
       authenticated: req.isAuthenticated(),
     });
@@ -34,9 +37,12 @@ const readNews = async (req, res, next) => {
 const categoryNews = async (req, res, next) => {
   try {
     const newsCategories = await prisma.category_news.findMany({
-      include: {
+      select: {
+        category: true,
+        id_category_news: true,
+        created_at: true,
         news: true,
-      },
+      }
     });
 
     res.render("kategori-news", {
