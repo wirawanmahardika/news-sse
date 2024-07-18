@@ -154,10 +154,11 @@ const addNewNews = async (req, res, next) => {
 
 const deleteNews = async (req, res, next) => {
   try {
-    const id_news = validation(newsValidation.deleteNews)
+    const id_news = validation(newsValidation.deleteNews, req.params.id_news)
     await prisma.news.delete({ where: { id_news } })
     res.send("Berhasil menghapus berita")
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
