@@ -1,3 +1,5 @@
+import ValidationError from "../../error/ValidationError.js";
+
 const validation = (schema, request) => {
   const result = schema.validate(request, {
     abortEarly: false,
@@ -5,7 +7,7 @@ const validation = (schema, request) => {
   });
 
   if (result.error) {
-    throw new Error(result.error);
+    throw new ValidationError(result.error)
   } else {
     return result.value;
   }
