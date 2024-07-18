@@ -1,9 +1,9 @@
 import express from "express";
-import newsController from "../controller/news-controller.js";
-import userController from "../controller/user-controller.js";
-import { ensureAuthenticated, isAuthenticated } from "../../middleware/authMiddleware.js";
-import { errorHandlerMid } from "../../middleware/errorHandlerMiddleware.js";
-import othersController from "../controller/others-controller.js";
+import newsController from "../client/controller/news-controller.js";
+import userController from "../client/controller/user-controller.js";
+import { ensureAuthenticated, isAuthenticated } from "../middleware/authMiddleware.js";
+import { errorHandlerMid } from "../middleware/errorHandlerMiddleware.js";
+import othersController from "../client/controller/others-controller.js";
 
 const clientSideRoute = express.Router();
 

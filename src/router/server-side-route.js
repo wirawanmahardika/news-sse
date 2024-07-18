@@ -1,8 +1,8 @@
 import express from "express";
-import newController from "../controller/news-controller..js";
-import userController from "../controller/user-controller.js";
-import { serverSideErrorHandler } from "../../middleware/errorHandlerMiddleware.js";
+import newController from "../server/controller/news-controller.js";
+import userController from "../server/controller/user-controller.js";
 import multer from "multer";
+import { serverSideErrorHandler } from "../middleware/errorHandlerMiddleware.js";
 
 const serverSideRoute = express.Router();
 
@@ -25,6 +25,4 @@ serverSideRoute.post("/logout", userController.logout);
 
 serverSideRoute.use(serverSideErrorHandler);
 
-// prettier-ignore
-// prettier-ignore
 export default serverSideRoute;

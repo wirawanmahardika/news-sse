@@ -1,4 +1,4 @@
-import { prisma } from "../../application/database.js";
+import { prisma } from "../../app/database.js";
 
 const searchNews = async (req, res, next) => {
   const judul = req.query.judul

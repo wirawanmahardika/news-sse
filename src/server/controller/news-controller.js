@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { prisma } from "../../application/database.js";
+import { prisma } from "../../app/database.js";
 import {
   addNewCategoryNewsSchema,
   addNewNewsSchema,

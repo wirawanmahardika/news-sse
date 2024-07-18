@@ -1,4 +1,4 @@
-import web from './src/application/web.js'
+import web from './src/app/web.js'
 import dotenv from "dotenv";
 dotenv.config();
 

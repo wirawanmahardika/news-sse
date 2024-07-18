@@ -1,6 +1,7 @@
-import clientSideRoute from "./client/routes/client-side-route.js";
-import serverSideRoute from "./server/routes/server-side-route.js";
+
 import express from "express";
+import serverSideRoute from "./server-side-route.js";
+import clientSideRoute from "./client-side-route.js";
 
 const routeRegulator = express.Router();
 

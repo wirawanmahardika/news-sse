@@ -1,4 +1,4 @@
-import { prisma } from "../../application/database.js";
+import { prisma } from "../../app/database.js";
 
 const homeView = async (req, res, next) => {
   try {

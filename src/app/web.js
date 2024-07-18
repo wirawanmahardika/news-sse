@@ -1,6 +1,6 @@
 import express from "express";
 import helmet from 'helmet'
-import routeRegulator from "../main-routes.js";
+import routeRegulator from "../router/main-routes.js";
 import passport from "passport";
 import flash from "express-flash";
 import session from "express-session";

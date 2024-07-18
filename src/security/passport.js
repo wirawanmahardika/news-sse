@@ -1,5 +1,5 @@
 import { Strategy } from "passport-local";
-import { prisma } from "../application/database.js";
+import { prisma } from "../app/database.js";
 
 export function initializePassport(passport) {
   passport.use(
