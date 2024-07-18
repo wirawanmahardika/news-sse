@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { prisma } from "../../application/database.js";
 
 const searchNews = async (req, res, next) => {
@@ -12,7 +11,7 @@ const searchNews = async (req, res, next) => {
   res.render("search-news", {
     authenticated: req.isAuthenticated(),
     news: news.map(n => {
-      n.img = "/api/v1/news/"+n.id_news
+      n.img = "/api/v1/news/" + n.id_news
       return n
     })
   })
@@ -31,7 +30,7 @@ const readNews = async (req, res, next) => {
     });
     res.render("read-news", {
       title: news.title,
-      img: "/api/v1/news/"+news.id_news,
+      img: "/api/v1/news/" + news.id_news,
       content: news.content,
       authenticated: req.isAuthenticated(),
     });
@@ -57,107 +56,8 @@ const categoryNews = async (req, res, next) => {
   }
 };
 
-const addNews = async (req, res, next) => {
-  try {
-    const news = await prisma.category_news.findMany({
-      select: {
-        category: true,
-        id_category_news: true,
-      },
-    });
-
-    res.render("add-news", {
-      newsCategories: news,
-      authenticated: req.isAuthenticated(),
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const addCategoryNews = async (req, res, next) => {
-  try {
-    res.render("add-category-news", { authenticated: req.isAuthenticated() });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const newsManagement = async (req, res, next) => {
-  try {
-    const news = await prisma.news.findMany();
-    const categories = await prisma.category_news.findMany({
-      select: {
-        category: true,
-        id_category_news: true,
-      },
-    });
-
-
-    res.render("news-management", {
-      categories,
-      news: news.map((n) => {
-        n.created_at = dayjs(n.created_at).format("HH:mm, DD-MM-YYYY");
-        return n;
-      }),
-      authenticated: req.isAuthenticated(),
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const categoryNewsManagement = async (req, res, next) => {
-  const skip = req.query.skip ? parseInt(req.query.skip) : 1
-  const categoryNews = await prisma.category_news.findMany({
-    take: 5,
-    skip: 5 * (skip - 1)
-  });
-  const countCategoryNews = await prisma.category_news.count()
-  const ceilCount = Math.ceil(countCategoryNews/5)
-  
-
-  res.render("category-news-management", {
-    currentPage: skip,
-    maxPage: ceilCount,
-    authenticated: req.isAuthenticated(),
-    categoryNews: categoryNews.map((cn) => {
-      cn.created_at = dayjs(cn.created_at).format("HH:mm, DD/MM/YYYY");
-      return cn;
-    }),
-  });
-};
-
-const newsContentManagement = async (req, res, next) => {
-  const news = await prisma.news.findUnique({
-    where: {
-      id_news: parseInt(req.params.id_news),
-    },
-    select: {
-      id_news: true,
-      title: true,
-      content: true,
-    },
-  });
-
-  res.render("news-content-management", {
-    authenticated: req.isAuthenticated(),
-    newsTitle: news.title,
-    img: "/api/v1/news/"+news.id_news,
-    contents: news.content.map((c) => {
-      c.content = c.content.split("$S");
-      return c;
-    }),
-  });
-};
-
 export default {
   searchNews,
   readNews,
-  addNews,
-  addCategoryNews,
   categoryNews,
-  newsManagement,
-  categoryNewsManagement,
-  newsContentManagement,
 };
