@@ -1,11 +1,9 @@
 import { prisma } from "../../app/database.js";
+import newsValidation from "../validation/news-validation.js";
+import validation from "../validation/validate.js";
 
 const searchNews = async (req, res, next) => {
-  const judul = req.query.judul
-  if (!judul) {
-    res.redirect('/')
-    return;
-  }
+  const judul = validation(newsValidation.searchNews, req.query.judul)
 
   const news = await prisma.news.findMany({ where: { title: { contains: judul } } })
   res.render("search-news", {
@@ -19,15 +17,9 @@ const searchNews = async (req, res, next) => {
 
 const readNews = async (req, res, next) => {
   try {
-    if (!req.query.news) {
-      return res.redirect("/");
-    }
+    const id_news = validation(newsValidation.readNews, req.query.news)
+    const news = await prisma.news.findUnique({ where: { id_news } });
 
-    const news = await prisma.news.findUnique({
-      where: {
-        id_news: parseInt(req.query.news),
-      },
-    });
     res.render("read-news", {
       title: news.title,
       img: "/api/v1/news/" + news.id_news,

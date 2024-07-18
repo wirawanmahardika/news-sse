@@ -1,11 +1,6 @@
 import dayjs from "dayjs";
 import { prisma } from "../../app/database.js";
-import {
-  addNewCategoryNewsSchema,
-  addNewNewsSchema,
-  updateCategoryNewsSchema,
-  updateNewsSchema,
-} from "../validation/news-validation.js";
+import newsValidation from "../validation/news-validation.js";
 import validation from "../validation/validate.js";
 import dotenv from "dotenv"
 
@@ -32,10 +27,11 @@ const getAllNewsCategory = async (req, res, next) => {
 
 const addCategoryNews = async (req, res, next) => {
   try {
-    const reqBody = validation(addNewCategoryNewsSchema, {
+    const reqBody = validation(newsValidation.addCategoryNews, {
       category: req.body.category,
       img: req.file.buffer,
     });
+
     reqBody.created_at = dayjs();
     const result = await prisma.category_news.create({
       data: reqBody,
@@ -49,8 +45,7 @@ const addCategoryNews = async (req, res, next) => {
 
 const deleteCategoryNews = async (req, res, next) => {
   try {
-    const idCategory = parseInt(req.params.id_category_news)
-
+    const idCategory = validation(newsValidation.deleteCategoryNews, req.params.id_category_news)
     await prisma.$transaction([
       prisma.news.deleteMany({ where: { id_category_news: idCategory } }),
       prisma.category_news.delete({ where: { id_category_news: idCategory } })
@@ -64,7 +59,7 @@ const deleteCategoryNews = async (req, res, next) => {
 
 const updateCategoryNews = async (req, res, next) => {
   try {
-    const result = validation(updateCategoryNewsSchema, {
+    const result = validation(newsValidation.updateCategoryNews, {
       img: req.file?.buffer,
       category: req.body.category,
       id_category_news: req.body.id_category_news,
@@ -91,7 +86,6 @@ const countCategoriesNews = async (req, res, next) => {
     const countResult = await prisma.category_news.count()
     return res.json({ count: Math.ceil(countResult / 5) })
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
@@ -136,7 +130,7 @@ const addNewNews = async (req, res, next) => {
       content: req.body.content,
     };
 
-    const reqBody = validation(addNewNewsSchema, dataFromClient);
+    const reqBody = validation(newsValidation.addNewNews, dataFromClient);
 
     const result = await prisma.news.create({
       data: {
@@ -160,7 +154,7 @@ const addNewNews = async (req, res, next) => {
 
 const deleteNews = async (req, res, next) => {
   try {
-    const id_news = parseInt(req.params.id_news)
+    const id_news = validation(newsValidation.deleteNews)
     await prisma.news.delete({ where: { id_news } })
     res.send("Berhasil menghapus berita")
   } catch (error) {
@@ -170,7 +164,7 @@ const deleteNews = async (req, res, next) => {
 
 const updateNews = async (req, res, next) => {
   try {
-    const result = validation(updateNewsSchema, {
+    const result = validation(newsValidation.updateNews, {
       id_news: req.body.id_news,
       id_category_news: req.body.id_category_news,
       title: req.body.title,
@@ -198,8 +192,9 @@ const updateNews = async (req, res, next) => {
 
 const getImageCategoryNewsByID = async (req, res, next) => {
   try {
+    const id_category_news = validation(newsValidation.checkIdNewsOrCategory, req.params["id_category_news"])
     const news = await prisma.category_news.findUnique({
-      where: { id_category_news: parseInt(req.params["id_category_news"]) },
+      where: { id_category_news: id_category_news },
       select: { img: true },
     });
 
@@ -212,8 +207,9 @@ const getImageCategoryNewsByID = async (req, res, next) => {
 
 const getImageNewsById = async (req, res, next) => {
   try {
+    const id_news = validation(newsValidation.checkIdNewsOrCategory, parseInt(req.params.id_news))
     const news = await prisma.news.findUnique({
-      where: { id_news: parseInt(req.params.id_news) },
+      where: { id_news },
       select: { img: true },
     });
 

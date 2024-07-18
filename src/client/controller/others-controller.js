@@ -3,13 +3,13 @@ import { prisma } from "../../app/database.js";
 const homeView = async (req, res, next) => {
   try {
     const categoryNews = await prisma.category_news.findMany({
-      take: 5,
+      take: 4,
       orderBy: {
         created_at: "desc",
       },
     });
     const recentNews = await prisma.news.findMany({
-      take: 5,
+      take: 4,
       orderBy: {
         created_at: "desc",
       },
