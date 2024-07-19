@@ -7,7 +7,7 @@ const routeRegulator = express.Router();
 
 routeRegulator.use("/api/v1", serverSideRoute);
 routeRegulator.use(clientSideRoute);
-routeRegulator.use((req, res, next) => {
+routeRegulator.use((_, res, next) => {
   res.send("there is no such file or directory");
 });
 

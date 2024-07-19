@@ -6,13 +6,8 @@ export function initializePassport(passport) {
     new Strategy(async (username, password, done) => {
       const user = await prisma.user.findUnique({ where: { username } });
 
-      if (!user) {
-        return done(null, false, { message: "Username tidak terdaftar" });
-      }
-
-      if (password !== user.password) {
-        return done(null, false, { message: "Password salah" });
-      }
+      if (!user) return done("username tidak terdaftar", false);
+      if (password !== user.password) return done("password salah", false);
 
       delete user.password;
       done(null, user);
@@ -28,11 +23,13 @@ export function initializePassport(passport) {
       const user = await prisma.user.findUnique({
         where: { id_user },
       });
+
       if (!user) {
         req.session.destroy();
         done("Terjadi kesalahan pada sesi login, mohon login kembali", false);
         return;
       }
+
       delete user.password;
       done(null, user);
     } catch (error) {

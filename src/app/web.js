@@ -2,7 +2,6 @@ import express from "express";
 import helmet from 'helmet'
 import routeRegulator from "../router/main-routes.js";
 import passport from "passport";
-import flash from "express-flash";
 import session from "express-session";
 import { initializePassport } from "../security/passport.js";
 import dotenv from "dotenv";
@@ -12,12 +11,11 @@ import cors from "cors"
 dotenv.config();
 const web = express();
 
-web.use(cors())
 web.use(helmet());
+web.use(cors({ origin: ["http://localhost:5173"], credentials: true }))
 web.set("view engine", "pug");
 web.use(express.json());
 web.use(express.urlencoded({ extended: false }));
-web.use(flash());
 web.use(
   session({
     resave: false,

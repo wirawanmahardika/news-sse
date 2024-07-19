@@ -3,6 +3,7 @@ import newController from "../server/controller/news-controller.js";
 import userController from "../server/controller/user-controller.js";
 import multer from "multer";
 import { serverSideErrorHandler } from "../middleware/errorHandlerMiddleware.js";
+import { ensureAuthenticated, isAuthenticated } from "../middleware/authMiddleware.js";
 
 const serverSideRoute = express.Router();
 
@@ -20,7 +21,7 @@ serverSideRoute.delete("/news/:id_news", newController.deleteNews);
 serverSideRoute.get("/news/:id_news", newController.getImageNewsById);
 serverSideRoute.get("/news", newController.getNews);
 
-serverSideRoute.post("/login", userController.login);
+serverSideRoute.post("/login", ensureAuthenticated, userController.login);
 serverSideRoute.post("/logout", userController.logout);
 
 serverSideRoute.use(serverSideErrorHandler);
