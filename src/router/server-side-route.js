@@ -10,19 +10,19 @@ const serverSideRoute = express.Router();
 serverSideRoute.get("/category-news/count", newController.countCategoriesNews);
 serverSideRoute.get("/category-news/:id_category_news", newController.getImageCategoryNewsByID);
 serverSideRoute.get("/category-news", newController.getAllNewsCategory);
-serverSideRoute.post("/category-news", multer().single('img'), newController.addCategoryNews); //
-serverSideRoute.patch("/category-news", multer().single('img'), newController.updateCategoryNews); //
+serverSideRoute.post("/category-news", isAuthenticated, multer().single('img'), newController.addCategoryNews); //
+serverSideRoute.patch("/category-news", isAuthenticated, multer().single('img'), newController.updateCategoryNews); //
 serverSideRoute.delete("/category-news/:id_category_news", newController.deleteCategoryNews);
 
 
-serverSideRoute.post("/news", multer().single('img'), newController.addNewNews); //
-serverSideRoute.patch("/news", multer().single('img'), newController.updateNews); //
-serverSideRoute.delete("/news/:id_news", newController.deleteNews);
+serverSideRoute.post("/news", isAuthenticated, multer().single('img'), newController.addNewNews); //
+serverSideRoute.patch("/news", isAuthenticated, multer().single('img'), newController.updateNews); //
+serverSideRoute.delete("/news/:id_news", isAuthenticated, newController.deleteNews);
 serverSideRoute.get("/news/:id_news", newController.getImageNewsById);
 serverSideRoute.get("/news", newController.getNews);
 
 serverSideRoute.post("/login", ensureAuthenticated, userController.login);
-serverSideRoute.post("/logout", userController.logout);
+serverSideRoute.post("/logout", isAuthenticated, userController.logout);
 
 serverSideRoute.use(serverSideErrorHandler);
 

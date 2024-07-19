@@ -158,7 +158,6 @@ const deleteNews = async (req, res, next) => {
     await prisma.news.delete({ where: { id_news } })
     res.send("Berhasil menghapus berita")
   } catch (error) {
-    console.log(error)
     next(error);
   }
 };
