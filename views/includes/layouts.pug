@@ -10,8 +10,8 @@ html(lang="en")
         link(rel="stylesheet", href="/css/style.css", attr)
     body(class="font-poppins min-h-[160vh]") 
         header(class="sm:flex sm:bg-cyan-600 sm:justify-between sm:items-center sm:sticky sm:top-0 lg:grid lg:grid-cols-3")
-            div(class="p-5 bg-cyan-600") 
-                h1(class="font-bold text-6xl text-center text-white sm:text-4xl md:text-5xl") AB
+            div(class="sm:p-5 md:p-3 bg-cyan-600") 
+                h1(class="font-bold text-6xl text-center text-white sm:text-3xl md:text-4xl") AB
                     span(class="text-yellow-500") News
 
             div(class="grid p-5 bg-white sm:bg-cyan-600")
@@ -38,9 +38,19 @@ html(lang="en")
                 svg.w-6.h-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke-width='1.5' stroke='currentColor')
                     path(stroke-linecap='round' stroke-linejoin='round' d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5')
 
-        nav(class="navbar || navbar-visibility rounded -translate-x-1/2 left-1/2 bottom-4 fixed w-[90vw] h-5/6 flex flex-col justify-evenly items-center text-white font-bold text-xl navbar-transition md:w-[45vw] md:text-3xl  bg-sky-600")
-            a(href="/") Home
-            a(href="/category-news") Kategori
+        nav(class="navbar || navbar-visibility rounded -translate-x-1/2 left-1/2 bottom-4 fixed w-[90vw] h-5/6 text-black p-3 flex flex-col gap-y-2 font-bold navbar-transition sm:w-[45vw] md:text-2xl bg-white shadow-md overflow-auto text-xl")
+            span(class="rounded px-2") Navigasi
+            ul(class="px-4 text-sm grid grid-cols-2 gap-3 md:text-base")
+                li
+                    a(href="/" class="hover:text-sky-600") Home
+                
+            span(class="rounded px-2") Kategori
+            ul(id="navbar-kategori" class="px-4 text-sm grid grid-cols-2 gap-3 md:text-base")
+                //- li
+                //-     a(href="/" class="hover:text-sky-600") Business
+                //- li
+                //-     a(href="/" class="hover:text-sky-600") Alam
+                
 
         block main
 
