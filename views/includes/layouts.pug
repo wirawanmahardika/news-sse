@@ -10,8 +10,18 @@ html(lang="en")
         link(rel="stylesheet", href="/css/style.css", attr)
     body(class="font-poppins min-h-[160vh]") 
         header(class="sm:flex sm:bg-cyan-600 sm:justify-between sm:items-center sm:sticky sm:top-0 lg:grid lg:grid-cols-3")
-            div(class="sm:p-5 md:p-3 bg-cyan-600") 
-                h1(class="font-bold text-6xl text-center text-white sm:text-3xl md:text-4xl") AB
+            div(class="hidden absolute top-full bg-slate-600 overflow-x-auto lg:flex left-0 right-0 text-sm py-1 px-1 text-gray-200")
+                span(class="border-r-2 border-white pr-3 font-semibold px-5") Kategori
+                ul(class="navbar-kategori flex gap-x-7 ml-7" )
+                    //- li
+                    //-     a(href="/" class="hover:text-sky-600") Business
+                    //- li
+                    //-     a(href="/" class="hover:text-sky-600") Alam
+    
+
+
+            div(class="p-3 sm:p-5 bg-cyan-600") 
+                h1(class="font-bold text-3xl text-center text-white sm:text-3xl md:text-4xl") AB
                     span(class="text-yellow-500") News
 
             div(class="grid p-5 bg-white sm:bg-cyan-600")
@@ -28,7 +38,7 @@ html(lang="en")
 
             nav(class="hidden lg:flex items-center font-semibold text-lg gap-x-5 justify-center " id="navbar")
                 a(class="hover:text-gray-700" href="/") Home
-                a(class="hover:text-gray-700" href="/category-news") Kategori
+                a(class="hover:text-gray-700" href="/category-news") Daftar Berita
 
         
     
@@ -45,7 +55,7 @@ html(lang="en")
                     a(href="/" class="hover:text-sky-600") Home
                 
             span(class="rounded px-2") Kategori
-            ul(id="navbar-kategori" class="px-4 text-sm grid grid-cols-2 gap-3 md:text-base")
+            ul(id="" class="navbar-kategori || px-4 text-sm grid grid-cols-2 gap-3 md:text-base")
                 //- li
                 //-     a(href="/" class="hover:text-sky-600") Business
                 //- li
