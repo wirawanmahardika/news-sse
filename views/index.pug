@@ -1,16 +1,15 @@
 extends ./includes/layouts
 
-mixin kategori(header, image)
+mixin kategori(c)
     div(class="sm:flex sm:flex-col sm:gap-y-2")
-        a(class="flex flex-col gap-y-3" href="/category-news#"+header)
-            h3(class="font-semibold text-xl sm:text-center sm:text-2xl md:text-2xl") #{header} 
-            img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src=image)
+        a(class="flex flex-col gap-y-3" href="/category-news/"+c.id_category_news)
+            h3(class="font-semibold text-xl sm:text-center sm:text-2xl md:text-2xl") #{c.category} 
+            img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src=c.img)
 
 mixin recent(n, image)
     div(class="sm:flex sm:flex-col sm:gap-y-2")
         a(href="/read-news?news="+n.id_news)
-            img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src=image)
-            //- img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src="/img/news-350x223-1.jpg")
+            img(class="w-full min-h-[200px] border-4 border-gray-800 sm:border-2" src=n.img)
         h3(class="font-semibold text-xl sm:text-center sm:text-2xl md:text-2xl") #{n.title}
 
 block main
@@ -18,9 +17,9 @@ block main
         div(class="flex flex-col gap-y-4 sm:grid sm:col-span-2 sm:grid-cols-2 sm:gap-6")
             h2(class="font-bold text-3xl mt-7 sm:mb-3 sm:col-span-2 md:text-4xl") Category
             each n in categoryNews
-                +kategori(n.category, n.img)
+                +kategori(n)
 
         div(class="flex flex-col gap-y-4 sm:grid sm:col-span-2 sm:grid-cols-2 sm:gap-6") 
             h2(class="font-bold text-3xl mt-7 sm:mb-3 sm:col-span-2 md:text-4xl") Terkini
             each n in recentNews
-                +recent(n, n.img)
+                +recent(n)

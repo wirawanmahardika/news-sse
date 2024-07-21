@@ -8,7 +8,7 @@ const clientSideRoute = express.Router();
 clientSideRoute.get("/", othersController.homeView);
 clientSideRoute.get("/search-news", newsController.searchNews);
 clientSideRoute.get("/read-news", newsController.readNews);
-clientSideRoute.get("/category-news", newsController.categoryNews);
+clientSideRoute.get("/category-news/:id_category", newsController.categoryNews);
 
 clientSideRoute.get("/error", othersController.errorView);
 clientSideRoute.use(errorHandlerMid);

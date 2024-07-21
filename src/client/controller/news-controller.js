@@ -36,19 +36,18 @@ const readNews = async (req, res, next) => {
 
 const categoryNews = async (req, res, next) => {
   try {
-    const newsCategories = await prisma.category_news.findMany({
-      select: {
-        category: true,
-        id_category_news: true,
-        created_at: true,
-        news: true,
-      }
+    const idCategory = validation(newsValidation.categoryNews, req.params.id_category)
+    const newsCategories = await prisma.news.findMany({
+      where: { id_category_news: idCategory },
+      select: { id_news: true, title: true, }
     });
 
-    res.render("kategori-news", {
-      newsCategories,
-      authenticated: req.isAuthenticated(),
-    });
+    const news = newsCategories.map(d => {
+      d.ilustrate = process.env.URL + "/api/v1/news/" + d.id_news
+      return d
+    })
+
+    res.render("kategori-news", { news });
   } catch (error) {
     next(error);
   }

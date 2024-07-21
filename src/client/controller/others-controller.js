@@ -27,7 +27,6 @@ const homeView = async (req, res, next) => {
         cn.img = process.env.URL + "/api/v1/category-news/" + cn.id_category_news
         return cn;
       }),
-      authenticated: req.isAuthenticated(),
     });
   } catch (error) {
     next(error);

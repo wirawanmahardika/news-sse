@@ -1,7 +1,6 @@
 const navbar = document.querySelector(".navbar");
 const navbarBtns = document.getElementsByClassName("navbar-btn");
 const searhForm = document.getElementById("search-form")
-// const navbarKategori = document.getElementById("navbar-kategori")
 
 Array.from(navbarBtns).forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -18,16 +17,17 @@ searhForm.addEventListener("submit", async (e) => {
   window.location.href = '/search-news?judul=' + input
 });
 
-const navbarKategori = document.getElementsByClassName("navbar-kategori");
 (async () => {
+  const navbarKategori = document.getElementsByClassName("navbar-kategori");
   const res = await fetch("/api/v1/category-news")
   const data = await res.json()
 
   Array.from(navbarKategori).forEach(n => {
     data.map(d => {
+      console.log(d)
       const li = document.createElement("li")
       const a = document.createElement("a")
-      a.href = "/"
+      a.href = "/category-news/" + d.id_category_news
       a.textContent = d.category
       a.classList.add("hover:text-sky-600")
 
