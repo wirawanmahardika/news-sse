@@ -12,19 +12,26 @@ const login = async (req, res, next) => {
   })(req, res, next);
 }
 
-const logout = (req, res, next) => {
+const logout = (req, res) => {
   req.logout(err => {
     if (err) return res.status(500).send("Something went wrong")
 
     req.session.destroy(err => {
       if (err) return res.status(500).send("Something went wrong")
-
-      return res.redirect('/')
+      res.send("Berhasil logout")
     })
   })
 }
 
+const checkAuthentication = (req, res, next) => {
+  try {
+    res.send(req.isAuthenticated())
+  } catch (error) {
+    next(error)
+  }
+}
+
 export default {
   login,
-  logout
+  logout, checkAuthentication
 };

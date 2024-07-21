@@ -22,7 +22,8 @@ serverSideRoute.get("/news/:id_news", newController.getImageNewsById);
 serverSideRoute.get("/news", newController.getNews);
 
 serverSideRoute.post("/login", ensureAuthenticated, userController.login);
-serverSideRoute.post("/logout", isAuthenticated, userController.logout);
+serverSideRoute.delete("/logout", isAuthenticated, userController.logout);
+serverSideRoute.get("/check-authentication", userController.checkAuthentication);
 
 serverSideRoute.use(serverSideErrorHandler);
 
