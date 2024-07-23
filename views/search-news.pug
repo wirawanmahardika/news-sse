@@ -1,13 +1,18 @@
 extends includes/layouts
 
 block main 
-    main(class="w-full mx-auto p-3 gap-y-2 flex flex-col lg:w-4/5")
-        each berita in news 
-            a(href="/read-news?news="+berita.id_news , class="toggle-to-read || flex justify-between border-2 border-black text-center shadow group")
-                div(class="w-2/6 flex items-center justify-center")
-                    img(src=berita.img, alt="image")
-                div(class="w-4/6 flex items-center justify-center p-2 text-xs sm:text-sm md:text-lg lg:text-xl group-hover:bg-sky-600 hover:text-white")
-                    h3= berita.title
-        else 
-            div(class="w-full h-96 flex justify-center items-center")
-                p Berita tidak ditemukan
+    div(class="flex flex-col w-full p-4 gap-y-4 mx-auto lg:mt-8 lg:w-4/5")
+        h1(class="font-bold text-lg text-center md:text-3xl") Hasil Pencarian 
+            span(class="text-sky-500")= searchText
+
+        div(class="grid w-full grid-cols-1 md:grid-cols-3 gap-2")    
+            each val in news                
+                a(href="/read-news?news="+ val.id_news, class="flex gap-y-1 gap-x-3 items-center md:flex-col")
+                    img(src=val.ilustrate, alt=val.title class="w-2/5 md:w-full")
+                    div(class="flex flex-col gap-y-2 w-3/5 md:w-full")
+                        span(class="font-semibold text-sm sm:text-lg md:text-sm")= val.title
+                        span(class="text-gray-800 text-xs")= val.created_at
+
+            else 
+                div(class="w-full h-96 flex justify-center items-center md:col-span-3")
+                    span(class="text-xl text-red-500") Berita tidak ditemukan

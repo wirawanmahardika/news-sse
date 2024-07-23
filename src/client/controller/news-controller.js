@@ -11,9 +11,10 @@ const searchNews = async (req, res, next) => {
 
   const news = await prisma.news.findMany({ where: { title: { contains: judul } } })
   res.render("search-news", {
-    authenticated: req.isAuthenticated(),
+    searchText: judul,
     news: news.map(n => {
-      n.img = process.env.URL + "/api/v1/news/" + n.id_news
+      n.ilustrate = process.env.URL + "/api/v1/news/" + n.id_news
+      n.created_at = dayjs(n.created_at).format("dddd, D-M-YYYY")
       return n
     })
   })
