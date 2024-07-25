@@ -18,6 +18,7 @@ const homeView = async (req, res, next) => {
       },
     });
 
+
     res.render("index", {
       recentNews: recentNews.map((cn) => {
         cn.img = process.env.URL + "/api/v1/news/" + cn.id_news
@@ -34,6 +35,7 @@ const homeView = async (req, res, next) => {
 };
 
 const errorView = (req, res) => {
+  console.log(req.query.message)
   res.render("error", {
     // error: req.query.message || "Terjadi kesalahan",
     error: "Terjadi kesalahan",

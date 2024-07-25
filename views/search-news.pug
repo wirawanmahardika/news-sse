@@ -16,3 +16,22 @@ block main
             else 
                 div(class="w-full h-96 flex justify-center items-center md:col-span-3")
                     span(class="text-xl text-red-500") Berita tidak ditemukan
+
+        div(class="w-full flex items-center justify-center mt-10 flex-wrap gap-y-1")   
+            div(class="hover:bg-gray-500 cursor-pointer p-1 rounded-l border-2 border-r border-black bg-gray-300")
+                a(class="block size-5 text-center" href="/search-news?judul="+searchText+"&page="+prev)
+                    svg(class="size-5" xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke-width='1.5' stroke='currentColor')
+                        path(stroke-linecap='round' stroke-linejoin='round' d='m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5')
+        
+            - for (var x = 1; x <= maxPage; x++)
+                if x == page 
+                    div(class="p-1 border-x border-y-2 border-black bg-sky-500")
+                        a(class="block size-5 text-center" href="/search-news?judul="+searchText+"&page="+x)= x
+                else 
+                    div(class="p-1 border-x border-y-2 border-black")
+                        a(class="block size-5 text-center" href="/search-news?judul="+searchText+"&page="+x)= x
+
+            div(class="hover:bg-gray-500 cursor-pointer p-1 rounded-r border-2 border-l border-black bg-gray-300")
+                a(class="block size-5 text-center" href="/search-news?judul="+searchText+"&page="+next)
+                    svg(class="size-5 rotate-180" xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke-width='1.5' stroke='currentColor')
+                        path(stroke-linecap='round' stroke-linejoin='round' d='m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5')
