@@ -92,7 +92,14 @@ const countCategoriesNews = async (req, res, next) => {
 
 const getNews = async (req, res, next) => {
   try {
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const totalNews = await prisma.news.count()
+    const maxPage = Math.ceil(totalNews / 10)
+
+
     const data = await prisma.news.findMany({
+      take: page * 10,
+      skip: (page - 1) * 10,
       select: {
         id_news: true,
         title: true,
@@ -115,7 +122,17 @@ const getNews = async (req, res, next) => {
       delete d.category_news
       return d
     })
-    return res.json(result)
+
+    const pages = []
+    for (let i = 1; i <= maxPage; i++) { pages.push(i) }
+
+    return res.json({
+      news: result,
+      pagination: {
+        currentPage: page,
+        pages: pages
+      },
+    })
   } catch (error) {
     next(error)
   }
