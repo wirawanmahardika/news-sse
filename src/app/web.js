@@ -12,7 +12,7 @@ dotenv.config();
 const web = express();
 
 web.use(helmet());
-web.use(cors({ origin: ["http://localhost:5173"], credentials: true }))
+web.use(cors({ origin: ["http://localhost:5173", "http://localhost:3000"], credentials: true }))
 web.set("view engine", "pug");
 web.use(express.json());
 web.use(express.urlencoded({ extended: false }));
